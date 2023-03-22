@@ -18,10 +18,9 @@ import java.math.BigDecimal;
  * The class contains a ManyToOne association with the {@code Category}
  * class, indicating that a product belongs to a single category.
  * This association is annotated with the {@code @ManyToOne}, {@code
- *
  * @JoinColumn}, and {@code @NotBlank} annotations.
  * <p>
- * Each product has a name, description, image URL, quantity, price,
+ * Each product has a name, description, quantity, price,
  * availability, and a category to which it belongs.
  */
 @NoArgsConstructor
@@ -56,14 +55,6 @@ public final class Product {
 	@NotBlank
 	@NotNull
 	private String description;
-
-	/**
-	 * The URL of an image representing the product.
-	 */
-	@Column(name = "image_url")
-	@NotBlank
-	@NotNull
-	private String imageURL;
 
 	/**
 	 * The number of units of this product that are currently in
@@ -108,8 +99,6 @@ public final class Product {
 	 * @param name        The name of the product. Must not be blank or null.
 	 * @param description The description of the product. Must not be
 	 *                    blank or null.
-	 * @param imageURL    The link to the image of the product. Must not be
-	 *                    blank or null.
 	 * @param quantity    The quantity of the product in the market. Must
 	 *                    not be blank or null.
 	 * @param price       The price of the product. Must not be blank or null.
@@ -119,12 +108,10 @@ public final class Product {
 	 *                    to. Must not be blank or null.
 	 */
 	public Product(@NotBlank @NotNull final String name, @NotBlank @NotNull final String description,
-	               @NotBlank @NotNull final String imageURL, @NotBlank @NotNull final Integer quantity,
-	               @NotBlank @NotNull final BigDecimal price, @NotBlank @NotNull final Boolean available,
-	               @NotBlank @NotNull final Category category) {
+	               @NotBlank @NotNull final Integer quantity, @NotBlank @NotNull final BigDecimal price,
+	               @NotBlank @NotNull final Boolean available, @NotBlank @NotNull final Category category) {
 		this.name = name;
 		this.description = description;
-		this.imageURL = imageURL;
 		this.quantity = quantity;
 		this.price = price;
 		this.available = available;

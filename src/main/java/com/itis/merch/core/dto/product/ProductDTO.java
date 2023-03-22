@@ -21,7 +21,7 @@ import java.math.BigDecimal;
  * the boilerplate code required for a data class such as getters, setters,
  * equals, hashCode, and toString methods.
  * <p>
- * Each ProductDTO has a name, description, image URL, quantity, price,
+ * Each ProductDTO has a name, description, quantity, price,
  * availability, and a category ID to which it belongs.
  * <p>
  * NOTE: need to add {@code getProductFromDTO} in the future {@code
@@ -34,8 +34,7 @@ public final class ProductDTO {
 	/*----- Private fields -----*/
 
 	/**
-	 * The unique identifier for this product. It is generated automatically
-	 * when a new product is added to the database.
+	 * The unique identifier for this product.
 	 */
 	private Integer id;
 
@@ -52,13 +51,6 @@ public final class ProductDTO {
 	@NotBlank
 	@NotNull
 	private String description;
-
-	/**
-	 * The URL of an image representing the product.
-	 */
-	@NotBlank
-	@NotNull
-	private String imageURL;
 
 	/**
 	 * The number of units of this product that are currently in stock.
@@ -96,8 +88,6 @@ public final class ProductDTO {
 	 * @param name        the name of the product, which cannot be blank or null
 	 * @param description the description of the product, which cannot be
 	 *                    blank or null
-	 * @param imageURL    the URL of the image of the product, which cannot
-	 *                    be blank or null
 	 * @param quantity    the quantity of the product, which cannot be null
 	 * @param price       the price of the product, which cannot be null
 	 * @param available   a boolean indicating whether the product is available
@@ -105,13 +95,13 @@ public final class ProductDTO {
 	 * @param categoryID  the ID of the category to which the product belongs,
 	 *                    which cannot be null
 	 */
-	public ProductDTO(final Integer id, @NotBlank @NotNull final String name, @NotBlank @NotNull final String description,
-	                  @NotBlank @NotNull final String imageURL, @NotNull final Integer quantity, @NotNull final BigDecimal price,
-	                  @NotNull final Boolean available, @NotNull final Integer categoryID) {
+	public ProductDTO(final Integer id, @NotBlank @NotNull final String name,
+	                  @NotBlank @NotNull final String description, @NotNull final Integer quantity,
+	                  @NotNull final BigDecimal price, @NotNull final Boolean available,
+	                  @NotNull final Integer categoryID) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.imageURL = imageURL;
 		this.quantity = quantity;
 		this.price = price;
 		this.available = available;
@@ -129,7 +119,6 @@ public final class ProductDTO {
 		this.setId(product.getId());
 		this.setName(product.getName());
 		this.setDescription(product.getDescription());
-		this.setImageURL(product.getImageURL());
 		this.setQuantity(product.getQuantity());
 		this.setPrice(product.getPrice());
 		this.setAvailable(product.getAvailable());
