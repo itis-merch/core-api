@@ -18,7 +18,6 @@ import java.math.BigDecimal;
  * The class contains a ManyToOne association with the {@code Category}
  * class, indicating that a product belongs to a single category.
  * This association is annotated with the {@code @ManyToOne}, {@code
- *
  * @JoinColumn}, and {@code @NotBlank} annotations.
  * <p>
  * Each product has a name, description, quantity, price,
