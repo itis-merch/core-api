@@ -32,19 +32,28 @@ public final class Category {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter @Setter @NotBlank private Integer id;
+	@Getter
+	@Setter
+	@NotBlank
+	private Integer id;
 
 	/**
 	 * The name of the category.
 	 */
 	@Column(name = "name")
-	@Getter @Setter @NotBlank private String name;
+	@Getter
+	@Setter
+	@NotBlank
+	private String name;
 
 	/**
 	 * A brief description of the category.
 	 */
 	@Column(name = "description")
-	@Getter @Setter @NotBlank private String description;
+	@Getter
+	@Setter
+	@NotBlank
+	private String description;
 
 
 	/*----- Constructors -----*/
@@ -52,7 +61,7 @@ public final class Category {
 	/**
 	 * Constructs a new Category object with the given name and description.
 	 *
-	 * @param name The name of the category. Must not be blank or null.
+	 * @param name        The name of the category. Must not be blank or null.
 	 * @param description The description of the category. Must not be blank
 	 *                    or null.
 	 */

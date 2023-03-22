@@ -29,12 +29,14 @@ public final class ApiResponse {
 	 * HTTP code that server returns in response to a request from
 	 * the client.
 	 */
-	@Getter private final Integer code;
+	@Getter
+	private final Integer code;
 
 	/**
 	 * Additional response status information that can be useful for
 	 * the client.
 	 */
-	@Getter private final String message;
+	@Getter
+	private final String message;
 
 }
