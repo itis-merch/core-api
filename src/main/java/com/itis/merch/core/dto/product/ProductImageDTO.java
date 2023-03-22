@@ -61,4 +61,5 @@ public final class ProductImageDTO {
 		this.setImageURL(productImage.getImageURL());
 		this.setProductID(productImage.getProduct().getId());
 	}
+
 }
