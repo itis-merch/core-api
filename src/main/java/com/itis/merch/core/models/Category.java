@@ -1,8 +1,7 @@
 package com.itis.merch.core.models;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -23,6 +22,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Entity
 @Table(name = "category")
+@Data
 public final class Category {
 
 	/*----- Private fields -----*/
@@ -33,8 +33,6 @@ public final class Category {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter
-	@Setter
 	@NotNull
 	private Integer id;
 
@@ -42,8 +40,6 @@ public final class Category {
 	 * The name of the category.
 	 */
 	@Column(name = "name")
-	@Getter
-	@Setter
 	@NotBlank
 	@NotNull
 	private String name;
@@ -52,8 +48,6 @@ public final class Category {
 	 * A brief description of the category.
 	 */
 	@Column(name = "description")
-	@Getter
-	@Setter
 	@NotBlank
 	@NotNull
 	private String description;

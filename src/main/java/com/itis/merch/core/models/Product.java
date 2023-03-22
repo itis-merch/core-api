@@ -1,8 +1,7 @@
 package com.itis.merch.core.models;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -28,6 +27,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 @Table(name = "product")
+@Data
 public final class Product {
 
 	/*----- Private fields -----*/
@@ -38,8 +38,6 @@ public final class Product {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Getter
-	@Setter
 	@NotNull
 	private Integer id;
 
@@ -47,8 +45,6 @@ public final class Product {
 	 * The name of the product.
 	 */
 	@Column(name = "name")
-	@Getter
-	@Setter
 	@NotBlank
 	@NotNull
 	private String name;
@@ -57,8 +53,6 @@ public final class Product {
 	 * A brief description of the product.
 	 */
 	@Column(name = "description")
-	@Getter
-	@Setter
 	@NotBlank
 	@NotNull
 	private String description;
@@ -67,8 +61,6 @@ public final class Product {
 	 * The URL of an image representing the product.
 	 */
 	@Column(name = "image_url")
-	@Getter
-	@Setter
 	@NotBlank
 	@NotNull
 	private String imageURL;
@@ -78,8 +70,6 @@ public final class Product {
 	 * stock.
 	 */
 	@Column(name = "quantity")
-	@Getter
-	@Setter
 	@NotNull
 	private Integer quantity;
 
@@ -87,8 +77,6 @@ public final class Product {
 	 * The price of the product.
 	 */
 	@Column(name = "price")
-	@Getter
-	@Setter
 	@NotNull
 	private BigDecimal price;
 
@@ -97,8 +85,6 @@ public final class Product {
 	 * available for purchase.
 	 */
 	@Column(name = "available")
-	@Getter
-	@Setter
 	@NotNull
 	private Boolean available;
 
@@ -107,8 +93,6 @@ public final class Product {
 	 */
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "category_id", nullable = false)
-	@Getter
-	@Setter
 	@NotNull
 	private Category category;
 
