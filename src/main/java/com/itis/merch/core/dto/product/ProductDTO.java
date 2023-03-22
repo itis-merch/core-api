@@ -34,8 +34,7 @@ public final class ProductDTO {
 	/*----- Private fields -----*/
 
 	/**
-	 * The unique identifier for this product. It is generated automatically
-	 * when a new product is added to the database.
+	 * The unique identifier for this product.
 	 */
 	private Integer id;
 
