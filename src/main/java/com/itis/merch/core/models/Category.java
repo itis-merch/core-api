@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * The {@code Category} class represents a category entity in the
@@ -34,7 +35,7 @@ public final class Category {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Getter
 	@Setter
-	@NotBlank
+	@NotNull
 	private Integer id;
 
 	/**
@@ -44,6 +45,7 @@ public final class Category {
 	@Getter
 	@Setter
 	@NotBlank
+	@NotNull
 	private String name;
 
 	/**
@@ -53,6 +55,7 @@ public final class Category {
 	@Getter
 	@Setter
 	@NotBlank
+	@NotNull
 	private String description;
 
 
@@ -65,7 +68,8 @@ public final class Category {
 	 * @param description The description of the category. Must not be blank
 	 *                    or null.
 	 */
-	public Category(@NotBlank final String name, @NotBlank final String description) {
+	public Category(@NotBlank @NotNull final String name,
+	                @NotBlank @NotNull final String description) {
 		this.name = name;
 		this.description = description;
 	}

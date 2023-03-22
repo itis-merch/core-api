@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 /**
@@ -39,7 +40,7 @@ public final class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Getter
 	@Setter
-	@NotBlank
+	@NotNull
 	private Integer id;
 
 	/**
@@ -49,6 +50,7 @@ public final class Product {
 	@Getter
 	@Setter
 	@NotBlank
+	@NotNull
 	private String name;
 
 	/**
@@ -58,6 +60,7 @@ public final class Product {
 	@Getter
 	@Setter
 	@NotBlank
+	@NotNull
 	private String description;
 
 	/**
@@ -67,6 +70,7 @@ public final class Product {
 	@Getter
 	@Setter
 	@NotBlank
+	@NotNull
 	private String imageURL;
 
 	/**
@@ -76,7 +80,7 @@ public final class Product {
 	@Column(name = "quantity")
 	@Getter
 	@Setter
-	@NotBlank
+	@NotNull
 	private Integer quantity;
 
 	/**
@@ -85,7 +89,7 @@ public final class Product {
 	@Column(name = "price")
 	@Getter
 	@Setter
-	@NotBlank
+	@NotNull
 	private BigDecimal price;
 
 	/**
@@ -95,7 +99,7 @@ public final class Product {
 	@Column(name = "available")
 	@Getter
 	@Setter
-	@NotBlank
+	@NotNull
 	private Boolean available;
 
 	/**
@@ -105,7 +109,7 @@ public final class Product {
 	@JoinColumn(name = "category_id", nullable = false)
 	@Getter
 	@Setter
-	@NotBlank
+	@NotNull
 	private Category category;
 
 
@@ -130,10 +134,10 @@ public final class Product {
 	 * @param category    The {@code Category} class that this product belongs
 	 *                    to. Must not be blank or null.
 	 */
-	public Product(@NotBlank final String name, @NotBlank final String description,
-	               @NotBlank final String imageURL, @NotBlank final Integer quantity,
-	               @NotBlank final BigDecimal price, @NotBlank final Boolean available,
-	               @NotBlank final Category category) {
+	public Product(@NotBlank @NotNull final String name, @NotBlank @NotNull final String description,
+	               @NotBlank @NotNull final String imageURL, @NotBlank @NotNull final Integer quantity,
+	               @NotBlank @NotNull final BigDecimal price, @NotBlank @NotNull final Boolean available,
+	               @NotBlank @NotNull final Category category) {
 		this.name = name;
 		this.description = description;
 		this.imageURL = imageURL;
