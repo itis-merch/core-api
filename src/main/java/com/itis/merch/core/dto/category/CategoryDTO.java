@@ -1,11 +1,15 @@
 package com.itis.merch.core.dto.category;
 
+import com.itis.merch.core.dto.product.ProductDTO;
 import com.itis.merch.core.models.Category;
+import com.itis.merch.core.models.Product;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The {@code CategoryDTO} class represents a data transfer object for
@@ -48,6 +52,12 @@ public final class CategoryDTO {
 	@NotNull
 	private String description;
 
+	/**
+	 * The list of products that belong to this category.
+	 */
+	@NotNull
+	private List<ProductDTO> productDTOs;
+
 
 	/*----- Constructors -----*/
 
@@ -63,6 +73,7 @@ public final class CategoryDTO {
 		this.id = id;
 		this.name = name;
 		this.description = description;
+		this.productDTOs = new ArrayList<>();
 	}
 
 	/**
@@ -75,6 +86,8 @@ public final class CategoryDTO {
 		this.setId(category.getId());
 		this.setName(category.getName());
 		this.setDescription(category.getDescription());
+		this.productDTOs = new ArrayList<>();
+		category.getProducts().forEach(product -> this.productDTOs.add(new ProductDTO(product)));
 	}
 
 }

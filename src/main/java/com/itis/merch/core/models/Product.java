@@ -84,7 +84,7 @@ public final class Product {
 	/**
 	 * List of images that belong to this product.
 	 */
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	@NotNull
 	private List<ProductImage> productImages;
 
