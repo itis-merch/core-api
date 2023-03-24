@@ -55,4 +55,4 @@
 - [ ] Нет
 ```
 
-[Примером одного из PR можно посмотреть по этой ссылке.](https://github.com/itis-merch/core-api/pull/2)
+[Пример одного из PR можно посмотреть по этой ссылке.](https://github.com/itis-merch/core-api/pull/2)
