@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The {@code Category} class represents a category entity in the
@@ -52,6 +54,13 @@ public final class Category {
 	@NotNull
 	private String description;
 
+	/**
+	 * List of products that belong to this category.
+	 */
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+	@NotNull
+	private List<Product> products;
+
 
 	/*----- Constructors -----*/
 
@@ -66,6 +75,7 @@ public final class Category {
 	                @NotBlank @NotNull final String description) {
 		this.name = name;
 		this.description = description;
+		this.products = new ArrayList<>();
 	}
 
 }

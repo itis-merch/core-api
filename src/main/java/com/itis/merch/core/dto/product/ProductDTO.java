@@ -114,6 +114,7 @@ public final class ProductDTO {
 		this.quantity = quantity;
 		this.price = price;
 		this.available = available;
+		this.imageURLs = new ArrayList<>();
 		this.categoryID = categoryID;
 	}
 
@@ -132,9 +133,7 @@ public final class ProductDTO {
 		this.setPrice(product.getPrice());
 		this.setAvailable(product.getAvailable());
 		this.imageURLs = new ArrayList<>();
-		for (final ProductImage productImage : product.getProductImages()) {
-			this.imageURLs.add(productImage.getImageURL());
-		}
+		product.getProductImages().forEach(productImage -> this.imageURLs.add(productImage.getImageURL()));
 		this.setCategoryID(product.getCategory().getId());
 	}
 
