@@ -26,7 +26,8 @@ public final class ProductImage {
 
 	/**
 	 * The unique identifier for this product image. Generated
-	 * automatically when a new product is added to the database.
+	 * automatically when a new product image is added to the
+	 * database.
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
