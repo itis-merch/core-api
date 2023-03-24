@@ -7,6 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Product class represents a product in an e-commerce system.
@@ -80,6 +82,13 @@ public final class Product {
 	private Boolean available;
 
 	/**
+	 * List of images that belong to this product.
+	 */
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@NotNull
+	private List<ProductImage> productImages;
+
+	/**
 	 * The category to which this product belongs.
 	 */
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -115,6 +124,7 @@ public final class Product {
 		this.quantity = quantity;
 		this.price = price;
 		this.available = available;
+		this.productImages = new ArrayList<>();
 		this.category = category;
 	}
 

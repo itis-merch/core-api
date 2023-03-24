@@ -1,12 +1,15 @@
 package com.itis.merch.core.dto.product;
 
 import com.itis.merch.core.models.Product;
+import com.itis.merch.core.models.ProductImage;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The ProductDTO class is a data transfer object that represents a
@@ -72,6 +75,12 @@ public final class ProductDTO {
 	private Boolean available;
 
 	/**
+	 * List of product images that belong to this product.
+	 */
+	@NotNull
+	private List<String> imageURLs;
+
+	/**
 	 * The ID of the category to which this product belongs.
 	 */
 	@NotNull
@@ -122,6 +131,10 @@ public final class ProductDTO {
 		this.setQuantity(product.getQuantity());
 		this.setPrice(product.getPrice());
 		this.setAvailable(product.getAvailable());
+		this.imageURLs = new ArrayList<>();
+		for (final ProductImage productImage : product.getProductImages()) {
+			this.imageURLs.add(productImage.getImageURL());
+		}
 		this.setCategoryID(product.getCategory().getId());
 	}
 
