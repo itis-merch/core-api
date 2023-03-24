@@ -2,7 +2,6 @@ package com.itis.merch.core.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 
 /**
  * We use this class in order to standardize the API response that
