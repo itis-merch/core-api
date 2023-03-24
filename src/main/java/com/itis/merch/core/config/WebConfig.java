@@ -25,7 +25,8 @@ public class WebConfig implements WebMvcConfigurer {
 	 * any domain with {@code allowedOrigins("**")}. This way, the
 	 * application can handle requests from any domain that uses these methods.
 	 *
-	 * @param registry
+	 * @param registry an instance of the {@code CorsRegistry} class that is
+	 *                 used to register the CORS configuration for the endpoint
 	 */
 	@Override
 	public void addCorsMappings(final CorsRegistry registry) {
