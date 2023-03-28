@@ -1,26 +1,33 @@
 package com.itis.merch.core.controllers;
 
-
 import com.itis.merch.core.dto.product.ProductDTO;
 import com.itis.merch.core.services.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The ProductController class handles incoming HTTP requests and returns HTTP responses for product-related operations.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/products")
 public class ProductController {
 
 	private final ProductService productService;
+
+	/**
+	 * Adds a new product to the database and returns the created product with HTTP status 201 CREATED.
+	 *
+	 * @param productDTO The ProductDTO object representing the product to be added.
+	 * @return A ResponseEntity containing the created ProductDTO object and HTTP status 201 CREATED.
+	 */
 	public ResponseEntity<ProductDTO> addNewProduct(@RequestBody ProductDTO productDTO) {
-		return ResponseEntity
-						.status(HttpStatus.CREATED)
-						.body(productService.addNewProduct(productDTO));
+		return ResponseEntity.status(HttpStatus.CREATED).body(productService.addNewProduct(productDTO));
 	}
 }
+
+
