@@ -38,6 +38,11 @@ public class ProductController {
 	public ResponseEntity<ProductDTO> getProductById(@PathVariable("product-id") Integer productId) {
 		return ResponseEntity.ok(productService.getById(productId));
 	}
+
+	@PostMapping("/{product-id}")
+	public ResponseEntity<ProductDTO> updateProductById(@PathVariable("product-id") Integer productId, @RequestBody ProductDTO productDTO) {
+		return ResponseEntity.ok(productService.updateById(productDTO, productId));
+	}
 }
 
 
