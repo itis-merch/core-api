@@ -11,7 +11,6 @@ import com.itis.merch.core.repositories.CategoryReposytory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,17 +37,37 @@ public class ProductService {
 		return new ProductDTO(product);
 	}
 
+	/**
+	 * Retrieves all products in the system.
+	 *
+	 * @return A list of all ProductDTO objects representing the products in the system.
+	 */
 	public List<ProductDTO> getAll() {
 		return productRepository.findAll().stream().map(ProductDTO::new).collect(Collectors.toList());
 	}
 
-	public ProductDTO getById(Integer id) {
+	/**
+	 * Retrieves a product by its ID.
+	 *
+	 * @param id The ID of the product to retrieve.
+	 * @return A ProductDTO object representing the retrieved product.
+	 * @throws RuntimeException If the product with the given ID does not exist.
+	 */
+	public ProductDTO getById(Integer id) throws RuntimeException {
 		Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product with required id does not exist"));
 
 		return new ProductDTO(product);
 	}
 
-	public ProductDTO updateById(ProductDTO productDTO, Integer id) {
+	/**
+	 * Updates a product with the given ID.
+	 *
+	 * @param productDTO The ProductDTO object containing the updated information for the product.
+	 * @param id         The ID of the product to be updated.
+	 * @return A ProductDTO object representing the updated product.
+	 * @throws RuntimeException If the product with the given ID does not exist or the category associated with the product does not exist.
+	 */
+	public ProductDTO updateById(ProductDTO productDTO, Integer id) throws RuntimeException {
 		Product updatedProduct = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product with required id does not exist"));
 
 		updatedProduct.setId(productDTO.getId());
@@ -62,4 +81,5 @@ public class ProductService {
 		return new ProductDTO(productRepository.save(updatedProduct));
 	}
 }
+
 
