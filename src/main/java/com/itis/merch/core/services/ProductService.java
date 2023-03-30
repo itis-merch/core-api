@@ -47,5 +47,19 @@ public class ProductService {
 
 		return new ProductDTO(product);
 	}
+
+	public ProductDTO updateById(ProductDTO productDTO, Integer id) {
+		Product updatedProduct = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product with required id does not exist"));
+
+		updatedProduct.setId(productDTO.getId());
+		updatedProduct.setCategory(categoryRepository.findById(productDTO.getCategoryID()).orElseThrow(() -> new RuntimeException("Category with given id does not exist")));
+		updatedProduct.setName(productDTO.getName());
+		updatedProduct.setDescription(productDTO.getDescription());
+		//updatedProduct.setProductImages(productDTO.getProductImages());
+		updatedProduct.setQuantity(productDTO.getQuantity());
+		updatedProduct.setPrice(productDTO.getPrice());
+
+		return new ProductDTO(productRepository.save(updatedProduct));
+	}
 }
 
