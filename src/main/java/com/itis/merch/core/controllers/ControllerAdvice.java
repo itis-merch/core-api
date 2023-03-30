@@ -20,8 +20,8 @@ public class ControllerAdvice {
 	 * @return An ApiResponse object containing a false status and the error message.
 	 */
 	@ResponseBody
-	@ExceptionHandler(RuntimeException.class)
-	public ApiResponse catchException(RuntimeException exception) {
+	@ExceptionHandler(Exception.class)
+	public ApiResponse catchException(Exception exception) {
 		return new ApiResponse(false, exception.getMessage());
 	}
 }
