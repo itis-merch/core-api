@@ -38,5 +38,8 @@ public class ProductService {
 		return new ProductDTO(product);
 	}
 
+	public List<ProductDTO> getAll() {
+		return productRepository.findAll().stream().map(ProductDTO::new).collect(Collectors.toList());
+	}
 }
 
