@@ -29,6 +29,10 @@ public class ProductController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(productService.addNewProduct(productDTO));
 	}
 
+	@GetMapping
+	public ResponseEntity<List<ProductDTO>> getProducts() {
+		return ResponseEntity.ok(productService.getAll());
+	}
 }
 
 
