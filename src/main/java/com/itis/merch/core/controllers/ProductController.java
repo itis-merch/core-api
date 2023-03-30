@@ -3,6 +3,7 @@
  */
 package com.itis.merch.core.controllers;
 
+import com.itis.merch.core.common.ApiResponse;
 import com.itis.merch.core.dto.product.ProductDTO;
 import com.itis.merch.core.services.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,12 @@ public class ProductController {
 	 * @return A ResponseEntity containing the created ProductDTO object and HTTP status 201 CREATED.
 	 */
 	@PostMapping
-	public ResponseEntity<ProductDTO> addNewProduct(@RequestBody ProductDTO productDTO) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(productService.addNewProduct(productDTO));
+	public ResponseEntity<ApiResponse> addNewProduct(@RequestBody final ProductDTO productDTO) {
+		productService.addNewProduct(productDTO);
+		return new ResponseEntity<>(
+						new ApiResponse(true, "Product was added successfully."),
+						HttpStatus.CREATED
+		);
 	}
 
 	/**
