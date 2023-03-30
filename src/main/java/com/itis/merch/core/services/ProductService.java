@@ -7,8 +7,13 @@ import com.itis.merch.core.dto.product.ProductDTO;
 import com.itis.merch.core.models.Category;
 import com.itis.merch.core.models.Product;
 import com.itis.merch.core.repositories.ProductRepository;
+import com.itis.merch.core.repositories.CategoryReposytory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
