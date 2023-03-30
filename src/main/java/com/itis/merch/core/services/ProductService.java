@@ -41,5 +41,11 @@ public class ProductService {
 	public List<ProductDTO> getAll() {
 		return productRepository.findAll().stream().map(ProductDTO::new).collect(Collectors.toList());
 	}
+
+	public ProductDTO getById(Integer id) {
+		Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product with required id does not exist"));
+
+		return new ProductDTO(product);
+	}
 }
 
