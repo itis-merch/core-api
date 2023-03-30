@@ -33,6 +33,11 @@ public class ProductController {
 	public ResponseEntity<List<ProductDTO>> getProducts() {
 		return ResponseEntity.ok(productService.getAll());
 	}
+
+	@GetMapping("/{product-id}")
+	public ResponseEntity<ProductDTO> getProductById(@PathVariable("product-id") Integer productId) {
+		return ResponseEntity.ok(productService.getById(productId));
+	}
 }
 
 
