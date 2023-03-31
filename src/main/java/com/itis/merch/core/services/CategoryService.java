@@ -25,17 +25,30 @@ public class CategoryService {
 	public CategoryDTO getById(Integer id) throws Exception{
 		Category category = categoryRepository.findById(id).get();
 		if(category == null){
-			throw new Exception("Category does not exist");
+			throw new Exception("Category does not exist!");
 		}
 
 		return new CategoryDTO(category);
 	}
 
 	public Category create(Category category) throws Exception {
-		if(categoryRepository.findByName(category.getName()) == null) {
-			throw new Exception("Category with this name already exist");
+		if(categoryRepository.findByName(category.getName()) != null) {
+			throw new Exception("Category with this name already exist!");
 		}
 
 		return categoryRepository.save(category);
+	}
+
+	public Category updateById(Category category, Integer id) throws Exception {
+		Category updateCategory = categoryRepository.findById(id).get();
+
+		if(updateCategory == null) {
+			throw new Exception("Category does not Exist!");
+		}
+
+		updateCategory.setName(category.getName());
+		updateCategory.setDescription(category.getDescription());
+		
+		return categoryRepository.save(updateCategory);
 	}
 }
