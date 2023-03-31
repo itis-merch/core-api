@@ -17,7 +17,7 @@ public class CategoryController {
 	@GetMapping
 	public ResponseEntity getCategories() {
 		try{
-			return ResponseEntity.ok(categoryService.getAll);
+			return ResponseEntity.ok(categoryService.getAll());
 		}
 		catch (Exception e){
 			return ResponseEntity.badRequest().body("Error!");
