@@ -24,9 +24,11 @@
  */
 package com.itis.merch.core.controllers;
 
+import com.itis.merch.core.common.ApiResponse;
 import com.itis.merch.core.models.Category;
 import com.itis.merch.core.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,7 +50,7 @@ public class CategoryController {
 	}
 
 	@GetMapping("/{category_id}")
-	public ResponseEntity getCategoryById(@RequestParam Integer id) {
+	public ResponseEntity getCategoryById(@PathVariable("category_id") Integer id) {
 		try {
 			return ResponseEntity.ok(categoryService.getById(id));
 		}
@@ -61,22 +63,33 @@ public class CategoryController {
 	public ResponseEntity createCategory(@RequestBody Category category) {
 		try {
 			categoryService.create(category);
-			return ResponseEntity.ok().body("Category was create successfully.");
-
+			return new ResponseEntity<>(
+					new ApiResponse(true, "Category was create successfully."),
+					HttpStatus.CREATED
+			);
 		}
 		catch (Exception e) {
-			return ResponseEntity.badRequest().body("Error!");
+			return new ResponseEntity<>(
+					new ApiResponse(false, "Category with this name already exist!"),
+					HttpStatus.BAD_REQUEST
+			);
 		}
 	}
 
 	@PostMapping("/{category_id}")
-	public ResponseEntity updateCategoryById(@RequestBody Category category, @RequestParam Integer id) {
+	public ResponseEntity updateCategoryById(@RequestBody Category category, @PathVariable("category_id") Integer id) {
 		try {
 			categoryService.updateById(category, id);
-			return ResponseEntity.ok().body("Category was update successfully.");
+			return new ResponseEntity<>(
+					new ApiResponse(true, "Category was update successfully."),
+					HttpStatus.ACCEPTED
+			);
 		}
 		catch (Exception e) {
-			return ResponseEntity.badRequest().body("Error!");
+			return new ResponseEntity<>(
+					new ApiResponse(false, "Category does not Exist!"),
+					HttpStatus.BAD_REQUEST
+			);
 		}
 	}
 }
