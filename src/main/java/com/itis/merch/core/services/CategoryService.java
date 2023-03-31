@@ -1,6 +1,7 @@
 package com.itis.merch.core.services;
 
 import com.itis.merch.core.dto.category.CategoryDTO;
+import com.itis.merch.core.models.Category;
 import com.itis.merch.core.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,14 @@ public class CategoryService {
 				.stream()
 				.map(CategoryDTO::new)
 				.collect(Collectors.toList());
+	}
+
+	public CategoryDTO getById(Integer id) throws Exception{
+		Category category = categoryRepository.findById(id).get();
+		if(category == null){
+			throw new Exception("Category does not exist");
+		}
+
+		return new CategoryDTO(category);
 	}
 }
