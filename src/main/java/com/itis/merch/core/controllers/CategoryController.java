@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
+
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
@@ -39,6 +41,17 @@ public class CategoryController {
 			categoryService.create(category);
 			return ResponseEntity.ok().body("Category was create successfully.");
 
+		}
+		catch (Exception e) {
+			return ResponseEntity.badRequest().body("Error!");
+		}
+	}
+
+	@PostMapping("/{category_id}")
+	public ResponseEntity updateCategoryById(@RequestBody Category category, @RequestParam Integer id) {
+		try {
+			categoryService.updateById(category, id);
+			return ResponseEntity.ok().body("Category was update successfully.");
 		}
 		catch (Exception e) {
 			return ResponseEntity.badRequest().body("Error!");
