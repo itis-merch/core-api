@@ -48,7 +48,7 @@ public class CategoryService {
 
 		updateCategory.setName(category.getName());
 		updateCategory.setDescription(category.getDescription());
-		
+
 		return categoryRepository.save(updateCategory);
 	}
 }

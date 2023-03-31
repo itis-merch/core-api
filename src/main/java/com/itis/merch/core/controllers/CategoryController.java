@@ -1,3 +1,27 @@
+/**
+ * The CategoryController class is responsible for handling HTTP requests related to Category objects.
+ * This class uses the CategoryService class to perform operations on the Category objects.
+ *
+ * This class is annotated with @RestController, which indicates that it is a controller that handles requests and
+ * returns responses in JSON format.
+ *
+ * The @RequestMapping annotation specifies the base URL for all requests handled by this controller.
+ *
+ * This class contains four methods:
+ *  - getCategories(): handles GET requests to retrieve all Category objects in the database. Returns a ResponseEntity
+ *                    object with the result of the operation.
+ *  - getCategoryById(): handles GET requests to retrieve a specific Category object by ID. Takes an Integer parameter
+ *                       representing the ID of the Category to retrieve. Returns a ResponseEntity object with the result
+ *                       of the operation.
+ *  - createCategory(): handles POST requests to create a new Category object. Takes a Category object in the request
+ *                      body. Returns a ResponseEntity object with the result of the operation.
+ *  - updateCategoryById(): handles POST requests to update an existing Category object by ID. Takes a Category object in
+ *                          the request body and an Integer parameter representing the ID of the Category to update.
+ *                          Returns a ResponseEntity object with the result of the operation.
+ *
+ *  In each of these methods, a try-catch block is used to catch any exceptions that may occur during the operation. If an
+ *  exception occurs, a bad request response is returned with an error message.
+ */
 package com.itis.merch.core.controllers;
 
 import com.itis.merch.core.models.Category;
