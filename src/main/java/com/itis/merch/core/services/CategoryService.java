@@ -1,24 +1,3 @@
-/**
- * This Java class is called CategoryService and is part of a project for a merchandising company.
- * It provides several methods to interact with the Category entity in the database.
- *
- * The class is annotated with the "@Service" annotation, which indicates that it is a Spring service that can be injected into other classes.
- * The CategoryRepository is also injected using the "@Autowired" annotation.
- *
- * The methods provided by the class are:
- *
- * - getAll(): Returns a list of all categories. The list is transformed into a list of CategoryDTO using the Java Stream API.
- *
- * - getById(id): Retrieves a category by its ID. If the category does not exist, an Exception is thrown.
- *
- * - create(category): Creates a new Category entity. If a category with the same name already exists, an Exception is thrown.
- *
- * - updateById(category, id): Updates an existing Category entity by its ID. If the category does not exist, an Exception is thrown.
- *
- * The CategoryDTO is a simplified version of the Category entity that contains only the necessary information for the client.
- *
- * This class is useful for managing Category entities in a database and provides a convenient way to interact with them.
- */
 package com.itis.merch.core.services;
 
 import com.itis.merch.core.dto.category.CategoryDTO;
