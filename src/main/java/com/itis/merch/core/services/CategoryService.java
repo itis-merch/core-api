@@ -30,4 +30,12 @@ public class CategoryService {
 
 		return new CategoryDTO(category);
 	}
+
+	public Category create(Category category) throws Exception {
+		if(categoryRepository.findByName(category.getName()) == null) {
+			throw new Exception("Category with this name already exist");
+		}
+
+		return categoryRepository.save(category);
+	}
 }
