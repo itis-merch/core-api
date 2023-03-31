@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,6 +19,16 @@ public class CategoryController {
 	public ResponseEntity getCategories() {
 		try{
 			return ResponseEntity.ok(categoryService.getAll());
+		}
+		catch (Exception e){
+			return ResponseEntity.badRequest().body("Error!");
+		}
+	}
+
+	@GetMapping("/{category_id}")
+	public ResponseEntity getCategoryById(@RequestParam Integer id) {
+		try{
+			return ResponseEntity.ok(categoryService.getById(id));
 		}
 		catch (Exception e){
 			return ResponseEntity.badRequest().body("Error!");
