@@ -10,10 +10,12 @@
 package com.itis.merch.core.services;
 
 import com.itis.merch.core.dto.category.CategoryDTO;
+import com.itis.merch.core.exceptions.CustomException;
 import com.itis.merch.core.models.Category;
 import com.itis.merch.core.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -63,11 +65,9 @@ public class CategoryService {
 	 * @return a CategoryDTO object
 	 * @throws Exception if the category does not exist
 	 */
-	public CategoryDTO getById(Integer id) throws Exception {
-		Category category = categoryRepository.findById(id).get();
-		if (category == null) {
-			throw new Exception("Category does not exist!");
-		}
+	public CategoryDTO getById(Integer id) throws CustomException {
+		Category category = categoryRepository.findById(id).orElseThrow(() ->
+						new CustomException("Category with required id does not exist.", HttpStatus.NOT_FOUND));
 
 		return new CategoryDTO(category);
 	}
@@ -96,16 +96,12 @@ public class CategoryService {
 	 * @return the updated category object
 	 * @throws Exception if the category does not exist
 	 */
-	public Category updateById(Category category, Integer id) throws Exception {
-		Category updateCategory = categoryRepository.findById(id).get();
+	public void updateById(CategoryDTO categoryDTO, Integer id) throws CustomException {
+		Category updatedCategory = categoryRepository.findById(id).orElseThrow(() -> new CustomException("Category with required id does not exist.", HttpStatus.NOT_FOUND));
 
-		if (updateCategory == null) {
-			throw new Exception("Category does not Exist!");
-		}
+		updatedCategory.setName(categoryDTO.getName());
+		updatedCategory.setDescription(categoryDTO.getDescription());
 
-		updateCategory.setName(category.getName());
-		updateCategory.setDescription(category.getDescription());
-
-		return categoryRepository.save(updateCategory);
+		categoryRepository.save(updatedCategory);
 	}
 }

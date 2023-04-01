@@ -10,6 +10,7 @@ package com.itis.merch.core.controllers;
 
 import com.itis.merch.core.common.ApiResponse;
 import com.itis.merch.core.dto.category.CategoryDTO;
+import com.itis.merch.core.exceptions.CustomException;
 import com.itis.merch.core.models.Category;
 import com.itis.merch.core.services.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -54,12 +55,13 @@ public class CategoryController {
 	 * exception is caught.
 	 */
 	@GetMapping("/{category_id}")
-	public ResponseEntity getCategoryById(@PathVariable("category_id") Integer id) {
-		try {
-			return ResponseEntity.ok(categoryService.getById(id));
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Category with this id does not exist!");
-		}
+	public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable("category_id") Integer categoryId) throws CustomException {
+//		try {
+//			return ResponseEntity.ok(categoryService.getById(id));
+//		} catch (Exception e) {
+//			return ResponseEntity.badRequest().body("Category with this id does not exist!");
+//		}
+		return new ResponseEntity<>(categoryService.getById(categoryId), HttpStatus.FOUND);
 	}
 
 	/**
@@ -70,9 +72,9 @@ public class CategoryController {
 	 * created successfully or not, and the appropriate HTTP status code.
 	 */
 	@PostMapping
-	public ResponseEntity<ApiResponse> createCategory(@RequestBody CategoryDTO categoryDTO) {
+	public ResponseEntity<ApiResponse> createCategory(@RequestBody CategoryDTO categoryDTO) throws CustomException {
 		if (Objects.nonNull(categoryService.readCategory(categoryDTO.getName()))) {
-			return new ResponseEntity<>(new ApiResponse(false, "Category with this name already exists!"), HttpStatus.BAD_REQUEST);
+			throw new CustomException("Category with this name already exists!", HttpStatus.CONFLICT);
 		}
 
 		categoryService.create(categoryDTO);
@@ -89,18 +91,24 @@ public class CategoryController {
 	 * does not exist.
 	 */
 	@PostMapping("/{category_id}")
-	public ResponseEntity updateCategoryById(@RequestBody Category category, @PathVariable("category_id") Integer id) {
-		try {
-			categoryService.updateById(category, id);
-			return new ResponseEntity<>(
-							new ApiResponse(true, "Category was updated successfully!"),
-							HttpStatus.ACCEPTED
-			);
-		} catch (Exception e) {
-			return new ResponseEntity<>(
-							new ApiResponse(false, "Category you want to update does not exist!"),
-							HttpStatus.BAD_REQUEST
-			);
-		}
+	public ResponseEntity<ApiResponse> updateCategoryById(@PathVariable("category_id") Integer categoryID,
+	                                                      @RequestBody CategoryDTO categoryDTO) throws CustomException {
+//		try {
+//			categoryService.updateById(category, id);
+//			return new ResponseEntity<>(
+//							new ApiResponse(true, "Category was updated successfully!"),
+//							HttpStatus.ACCEPTED
+//			);
+//		} catch (Exception e) {
+//			return new ResponseEntity<>(
+//							new ApiResponse(false, "Category you want to update does not exist!"),
+//							HttpStatus.BAD_REQUEST
+//			);
+//		}
+		categoryService.updateById(categoryDTO, categoryID);
+		return new ResponseEntity<>(
+						new ApiResponse(true, "Category was updated successfully."),
+						HttpStatus.OK
+		);
 	}
 }

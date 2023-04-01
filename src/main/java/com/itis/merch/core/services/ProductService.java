@@ -53,7 +53,10 @@ public class ProductService {
 	 * @return A list of all ProductDTO objects representing the products in the system.
 	 */
 	public List<ProductDTO> getAll() {
-		return productRepository.findAll().stream().map(ProductDTO::new).collect(Collectors.toList());
+		return productRepository.findAll()
+						.stream()
+						.map(ProductDTO::new)
+						.collect(Collectors.toList());
 	}
 
 	/**
