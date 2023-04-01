@@ -1,5 +1,6 @@
 package com.itis.merch.core.dto.product;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.itis.merch.core.models.Product;
 import com.itis.merch.core.models.ProductImage;
 import lombok.Data;
@@ -39,6 +40,7 @@ public final class ProductDTO {
 	/**
 	 * The unique identifier for this product.
 	 */
+	@JsonProperty("id")
 	private Integer id;
 
 	/**
@@ -46,6 +48,7 @@ public final class ProductDTO {
 	 */
 	@NotBlank
 	@NotNull
+	@JsonProperty("name")
 	private String name;
 
 	/**
@@ -53,18 +56,21 @@ public final class ProductDTO {
 	 */
 	@NotBlank
 	@NotNull
+	@JsonProperty("description")
 	private String description;
 
 	/**
 	 * The number of units of this product that are currently in stock.
 	 */
 	@NotNull
+	@JsonProperty("quantity")
 	private Integer quantity;
 
 	/**
 	 * The price of the product.
 	 */
 	@NotNull
+	@JsonProperty("price")
 	private BigDecimal price;
 
 	/**
@@ -72,18 +78,21 @@ public final class ProductDTO {
 	 * for purchase.
 	 */
 	@NotNull
+	@JsonProperty("available")
 	private Boolean available;
 
 	/**
 	 * List of product images that belong to this product.
 	 */
 	@NotNull
+	@JsonProperty("image_urls")
 	private List<String> imageURLs;
 
 	/**
 	 * The ID of the category to which this product belongs.
 	 */
 	@NotNull
+	@JsonProperty("category_id")
 	private Integer categoryID;
 
 

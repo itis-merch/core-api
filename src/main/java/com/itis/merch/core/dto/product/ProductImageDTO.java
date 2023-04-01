@@ -1,5 +1,6 @@
 package com.itis.merch.core.dto.product;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.itis.merch.core.models.ProductImage;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public final class ProductImageDTO {
 	/**
 	 * The unique identifier for this product image.
 	 */
+	@JsonProperty("id")
 	private Integer id;
 
 	/**
@@ -26,12 +28,14 @@ public final class ProductImageDTO {
 	 */
 	@NotBlank
 	@NotNull
+	@JsonProperty("image_url")
 	private String imageURL;
 
 	/**
 	 * The ID of the product that this image belongs to.
 	 */
 	@NotNull
+	@JsonProperty("product_id")
 	private Integer productID;
 
 	/**

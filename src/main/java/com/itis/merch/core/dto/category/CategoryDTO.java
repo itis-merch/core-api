@@ -1,5 +1,6 @@
 package com.itis.merch.core.dto.category;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.itis.merch.core.dto.product.ProductDTO;
 import com.itis.merch.core.models.Category;
 import com.itis.merch.core.models.Product;
@@ -36,6 +37,7 @@ public final class CategoryDTO {
 	/**
 	 * The id of the category.
 	 */
+	@JsonProperty("id")
 	private Integer id;
 
 	/**
@@ -43,6 +45,7 @@ public final class CategoryDTO {
 	 */
 	@NotBlank
 	@NotNull
+	@JsonProperty("name")
 	private String name;
 
 	/**
@@ -50,12 +53,14 @@ public final class CategoryDTO {
 	 */
 	@NotBlank
 	@NotNull
+	@JsonProperty("description")
 	private String description;
 
 	/**
 	 * The list of products that belong to this category.
 	 */
 	@NotNull
+	@JsonProperty("products")
 	private List<ProductDTO> productDTOs;
 
 

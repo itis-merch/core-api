@@ -7,6 +7,7 @@ import com.itis.merch.core.common.ApiResponse;
 import com.itis.merch.core.dto.product.ProductDTO;
 import com.itis.merch.core.services.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ import java.util.List;
 @RequestMapping("/products")
 @RequiredArgsConstructor
 public class ProductController {
+	@Autowired
 	private final ProductService productService;
 
 	/**
