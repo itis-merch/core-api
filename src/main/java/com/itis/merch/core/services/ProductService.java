@@ -8,7 +8,6 @@ import com.itis.merch.core.models.Category;
 import com.itis.merch.core.models.Product;
 import com.itis.merch.core.repositories.CategoryRepository;
 import com.itis.merch.core.repositories.ProductRepository;
-import com.itis.merch.core.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,3 @@
-/**
- * The ControllerAdvice class provides global exception handling for all controllers in the system.
- * It is annotated with @ControllerAdvice to indicate that it is a global exception handler for all controllers.
- * The class contains one method, catchException, that handles runtime exceptions and returns an ApiResponse object containing an error message.
- */
 package com.itis.merch.core.controllers;
 
 import com.itis.merch.core.common.ApiResponse;

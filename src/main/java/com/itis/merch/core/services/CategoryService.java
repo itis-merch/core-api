@@ -39,13 +39,14 @@ public class CategoryService {
 	 */
 	public List<CategoryDTO> getAll() {
 		return categoryRepository.findAll()
-				.stream()
-				.map(CategoryDTO::new)
-				.collect(Collectors.toList());
+						.stream()
+						.map(CategoryDTO::new)
+						.collect(Collectors.toList());
 	}
 
 	/**
 	 * Retrieves the category with the specified name from the database.
+	 *
 	 * @param name the name of the category to retrieve.
 	 * @return a {@code CategoryDTO} object representing the retrieved category, or null if
 	 * the category with the specified name does not exist in the database.
@@ -62,9 +63,9 @@ public class CategoryService {
 	 * @return a CategoryDTO object
 	 * @throws Exception if the category does not exist
 	 */
-	public CategoryDTO getById(Integer id) throws Exception{
+	public CategoryDTO getById(Integer id) throws Exception {
 		Category category = categoryRepository.findById(id).get();
-		if(category == null){
+		if (category == null) {
 			throw new Exception("Category does not exist!");
 		}
 
@@ -91,14 +92,14 @@ public class CategoryService {
 	 * Updates a category with the specified ID in the database.
 	 *
 	 * @param category the updated category object
-	 * @param id the ID of the category to update
+	 * @param id       the ID of the category to update
 	 * @return the updated category object
 	 * @throws Exception if the category does not exist
 	 */
 	public Category updateById(Category category, Integer id) throws Exception {
 		Category updateCategory = categoryRepository.findById(id).get();
 
-		if(updateCategory == null) {
+		if (updateCategory == null) {
 			throw new Exception("Category does not Exist!");
 		}
 

@@ -2,7 +2,6 @@ package com.itis.merch.core.dto.product;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.itis.merch.core.models.Product;
-import com.itis.merch.core.models.ProductImage;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

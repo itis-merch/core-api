@@ -3,7 +3,6 @@ package com.itis.merch.core.dto.category;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.itis.merch.core.dto.product.ProductDTO;
 import com.itis.merch.core.models.Category;
-import com.itis.merch.core.models.Product;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

@@ -18,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
@@ -58,8 +57,7 @@ public class CategoryController {
 	public ResponseEntity getCategoryById(@PathVariable("category_id") Integer id) {
 		try {
 			return ResponseEntity.ok(categoryService.getById(id));
-		}
-		catch (Exception e){
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("Category with this id does not exist!");
 		}
 	}
@@ -85,7 +83,7 @@ public class CategoryController {
 	 * Updates a category with the specified ID in the database.
 	 *
 	 * @param category the updated category object
-	 * @param id the ID of the category to update
+	 * @param id       the ID of the category to update
 	 * @return ResponseEntity containing a success message and a status code of 202 Accepted
 	 * if successful, or a failure message and a status code of 400 Bad Request if the category
 	 * does not exist.
@@ -95,14 +93,13 @@ public class CategoryController {
 		try {
 			categoryService.updateById(category, id);
 			return new ResponseEntity<>(
-					new ApiResponse(true, "Category was updated successfully!"),
-					HttpStatus.ACCEPTED
+							new ApiResponse(true, "Category was updated successfully!"),
+							HttpStatus.ACCEPTED
 			);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return new ResponseEntity<>(
-					new ApiResponse(false, "Category you want to update does not exist!"),
-					HttpStatus.BAD_REQUEST
+							new ApiResponse(false, "Category you want to update does not exist!"),
+							HttpStatus.BAD_REQUEST
 			);
 		}
 	}
