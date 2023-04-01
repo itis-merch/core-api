@@ -9,12 +9,17 @@
 package com.itis.merch.core.controllers;
 
 import com.itis.merch.core.common.ApiResponse;
+import com.itis.merch.core.dto.category.CategoryDTO;
 import com.itis.merch.core.models.Category;
 import com.itis.merch.core.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/categories")
@@ -30,13 +35,8 @@ public class CategoryController {
 	 *         or a status code of 400 Bad Request and an error message if an exception is caught.
 	 */
 	@GetMapping
-	public ResponseEntity getCategories() {
-		try {
-			return ResponseEntity.ok(categoryService.getAll());
-		}
-		catch (Exception e){
-			return ResponseEntity.badRequest().body("Error!");
-		}
+	public ResponseEntity<List<CategoryDTO>> getCategories() {
+		return new ResponseEntity<>(categoryService.getAll(), HttpStatus.OK);
 	}
 
 	/**
@@ -59,25 +59,15 @@ public class CategoryController {
 	/**
 	 * Creates a new category in the database.
 	 *
-	 * @param category the category object to create
-	 * @return ResponseEntity containing a success message and a status code of 201 Created if successful,
-	 *         or a failure message and a status code of 400 Bad Request if the category already exists.
 	 */
 	@PostMapping
-	public ResponseEntity createCategory(@RequestBody Category category) {
-		try {
-			categoryService.create(category);
-			return new ResponseEntity<>(
-					new ApiResponse(true, "Category was create successfully."),
-					HttpStatus.CREATED
-			);
+	public ResponseEntity<ApiResponse> createCategory(@RequestBody CategoryDTO categoryDTO) {
+		if (Objects.nonNull(categoryService.readCategory(categoryDTO.getName()))) {
+			return new ResponseEntity<>(new ApiResponse(false, "Category with this name already exists!"), HttpStatus.BAD_REQUEST);
 		}
-		catch (Exception e) {
-			return new ResponseEntity<>(
-					new ApiResponse(false, "Category with this name already exist!"),
-					HttpStatus.BAD_REQUEST
-			);
-		}
+
+		categoryService.create(categoryDTO);
+		return new ResponseEntity<>(new ApiResponse(true, "Category created successfully!"), HttpStatus.CREATED);
 	}
 
 	/**
@@ -93,13 +83,13 @@ public class CategoryController {
 		try {
 			categoryService.updateById(category, id);
 			return new ResponseEntity<>(
-					new ApiResponse(true, "Category was update successfully."),
+					new ApiResponse(true, "Category was updated successfully!"),
 					HttpStatus.ACCEPTED
 			);
 		}
 		catch (Exception e) {
 			return new ResponseEntity<>(
-					new ApiResponse(false, "Category does not Exist!"),
+					new ApiResponse(false, "Category you want to update does not exist!"),
 					HttpStatus.BAD_REQUEST
 			);
 		}

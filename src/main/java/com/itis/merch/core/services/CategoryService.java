@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +35,11 @@ public class CategoryService {
 				.stream()
 				.map(CategoryDTO::new)
 				.collect(Collectors.toList());
+	}
+
+	public CategoryDTO readCategory(final String name) {
+		final Category category = categoryRepository.findByName(name);
+		return Objects.nonNull(category) ? new CategoryDTO(category) : null;
 	}
 
 	/**
@@ -55,16 +61,17 @@ public class CategoryService {
 	/**
 	 * Creates a new category in the database.
 	 *
-	 * @param category the category object to create
-	 * @return the created category object
+	 * @param categoryDTO the CategoryDTO object to create
 	 * @throws Exception if a category with the same name already exists
 	 */
-	public Category create(Category category) throws Exception {
-		if(categoryRepository.findByName(category.getName()) != null) {
-			throw new Exception("Category with this name already exist!");
-		}
+	public void create(final CategoryDTO categoryDTO) {
+		final Category category = new Category();
 
-		return categoryRepository.save(category);
+		category.setId(categoryDTO.getId());
+		category.setName(categoryDTO.getName());
+		category.setDescription(categoryDTO.getDescription());
+
+		categoryRepository.save(category);
 	}
 
 	/**
