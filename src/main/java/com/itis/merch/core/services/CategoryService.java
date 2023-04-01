@@ -12,6 +12,7 @@ package com.itis.merch.core.services;
 import com.itis.merch.core.dto.category.CategoryDTO;
 import com.itis.merch.core.models.Category;
 import com.itis.merch.core.repositories.CategoryRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +20,17 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * This service class provides CRUD operations for the Category entity.
+ * <p>
+ * It interacts with the database through the {@code CategoryRepository} class.
+ */
+@RequiredArgsConstructor
 @Service
 public class CategoryService {
 
 	@Autowired
-	CategoryRepository categoryRepository;
+	final CategoryRepository categoryRepository;
 
 	/**
 	 * Retrieves all categories from the database and converts them to CategoryDTO objects.
@@ -37,6 +44,12 @@ public class CategoryService {
 				.collect(Collectors.toList());
 	}
 
+	/**
+	 * Retrieves the category with the specified name from the database.
+	 * @param name the name of the category to retrieve.
+	 * @return a {@code CategoryDTO} object representing the retrieved category, or null if
+	 * the category with the specified name does not exist in the database.
+	 */
 	public CategoryDTO readCategory(final String name) {
 		final Category category = categoryRepository.findByName(name);
 		return Objects.nonNull(category) ? new CategoryDTO(category) : null;
