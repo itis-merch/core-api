@@ -12,6 +12,7 @@ import com.itis.merch.core.common.ApiResponse;
 import com.itis.merch.core.dto.category.CategoryDTO;
 import com.itis.merch.core.models.Category;
 import com.itis.merch.core.services.CategoryService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,12 +22,13 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
 
 	@Autowired
-	CategoryService categoryService;
+	final CategoryService categoryService;
 
 	/**
 	 * Retrieves all categories from the database.
