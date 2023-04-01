@@ -75,7 +75,7 @@ public class ProductService {
 	public ProductDTO updateById(ProductDTO productDTO, Integer id) throws RuntimeException {
 		Product updatedProduct = productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product with required id does not exist"));
 
-		updatedProduct.setId(productDTO.getId());
+//		updatedProduct.setId(productDTO.getId());
 		updatedProduct.setCategory(categoryRepository.findById(productDTO.getCategoryID()).orElseThrow(() -> new RuntimeException("Category with given id does not exist")));
 		updatedProduct.setName(productDTO.getName());
 		updatedProduct.setDescription(productDTO.getDescription());
