@@ -5,6 +5,7 @@ package com.itis.merch.core.controllers;
 
 import com.itis.merch.core.common.ApiResponse;
 import com.itis.merch.core.dto.product.ProductDTO;
+import com.itis.merch.core.exceptions.CustomException;
 import com.itis.merch.core.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class ProductController {
 	 * @return A ResponseEntity containing the created ProductDTO object and HTTP status 201 CREATED.
 	 */
 	@PostMapping
-	public ResponseEntity<ApiResponse> addNewProduct(@RequestBody final ProductDTO productDTO) {
+	public ResponseEntity<ApiResponse> addNewProduct(@RequestBody final ProductDTO productDTO) throws CustomException {
 		productService.addNewProduct(productDTO);
 		return new ResponseEntity<>(
 						new ApiResponse(true, "Product was added successfully."),
@@ -55,8 +56,8 @@ public class ProductController {
 	 * @param productId The ID of the product to be retrieved.
 	 * @return A ResponseEntity containing the retrieved ProductDTO object and HTTP status 200 OK.
 	 */
-	@GetMapping("/{product-id}")
-	public ResponseEntity<ProductDTO> getProductById(@PathVariable("product-id") Integer productId) {
+	@GetMapping("/{product_id}")
+	public ResponseEntity<ProductDTO> getProductById(@PathVariable("product_id") Integer productId) throws CustomException {
 		return ResponseEntity.ok(productService.getById(productId));
 	}
 
@@ -67,9 +68,14 @@ public class ProductController {
 	 * @param productDTO The ProductDTO object representing the updated product.
 	 * @return A ResponseEntity containing the updated ProductDTO object and HTTP status 200 OK.
 	 */
-	@PostMapping("/{product-id}")
-	public ResponseEntity<ProductDTO> updateProductById(@PathVariable("product-id") Integer productId, @RequestBody ProductDTO productDTO) {
-		return ResponseEntity.ok(productService.updateById(productDTO, productId));
+	@PostMapping("/{product_id}")
+	public ResponseEntity<ApiResponse> updateProductById(@PathVariable("product_id") Integer productId,
+	                                                     @RequestBody ProductDTO productDTO) throws CustomException {
+		productService.updateById(productDTO, productId);
+		return new ResponseEntity<>(
+						new ApiResponse(true, "Product was updated successfully."),
+						HttpStatus.OK
+		);
 	}
 }
 
