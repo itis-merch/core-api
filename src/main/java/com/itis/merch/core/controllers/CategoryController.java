@@ -16,10 +16,6 @@ import java.util.Objects;
 /**
  * The CategoryController class is a REST API controller that handles all HTTP requests related to categories.
  * It provides endpoints for retrieving, creating, and updating categories.
- *
- * @author [Marat]
- * @version 1.0
- * @since 2023.03.31
  */
 @RequiredArgsConstructor
 @RestController
@@ -46,7 +42,7 @@ public class CategoryController {
 	 * @return ResponseEntity containing the category DTO object and a status code of 302 FOUND.
 	 */
 	@GetMapping("/{category_id}")
-	public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable("category_id") Integer categoryId) throws CustomException {
+	public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable("category_id") final Integer categoryId) throws CustomException {
 		return new ResponseEntity<>(categoryService.getCategoryById(categoryId), HttpStatus.FOUND);
 	}
 
@@ -58,7 +54,7 @@ public class CategoryController {
 	 * created successfully or not, and the appropriate HTTP status code.
 	 */
 	@PostMapping
-	public ResponseEntity<ApiResponse> createCategory(@RequestBody CategoryDTO categoryDTO) throws CustomException {
+	public ResponseEntity<ApiResponse> createCategory(@RequestBody final CategoryDTO categoryDTO) throws CustomException {
 		if (Objects.nonNull(categoryService.getCategoryByName(categoryDTO.getName()))) {
 			throw new CustomException("Category with this name already exists.", HttpStatus.CONFLICT);
 		}
@@ -75,8 +71,8 @@ public class CategoryController {
 	 * @return ResponseEntity containing a success message and a status code of 200 OK.
 	 */
 	@PostMapping("/{category_id}")
-	public ResponseEntity<ApiResponse> updateCategoryById(@PathVariable("category_id") Integer categoryID,
-	                                                      @RequestBody CategoryDTO categoryDTO) throws CustomException {
+	public ResponseEntity<ApiResponse> updateCategoryById(@PathVariable("category_id") final Integer categoryID,
+	                                                      @RequestBody final CategoryDTO categoryDTO) throws CustomException {
 		categoryService.updateCategoryById(categoryDTO, categoryID);
 		return new ResponseEntity<>(
 						new ApiResponse(true, "Category was updated successfully."),

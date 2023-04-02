@@ -64,7 +64,7 @@ public class ProductController {
 	 * status 200 OK.
 	 */
 	@GetMapping("/{product_id}")
-	public ResponseEntity<ProductDTO> getProductById(@PathVariable("product_id") Integer productId) throws CustomException {
+	public ResponseEntity<ProductDTO> getProductById(@PathVariable("product_id") final Integer productId) throws CustomException {
 		return ResponseEntity.ok(productService.getProductById(productId));
 	}
 
@@ -78,8 +78,8 @@ public class ProductController {
 	 * status 200 OK.
 	 */
 	@PostMapping("/{product_id}")
-	public ResponseEntity<ApiResponse> updateProductById(@PathVariable("product_id") Integer productId,
-	                                                     @RequestBody ProductDTO productDTO) throws CustomException {
+	public ResponseEntity<ApiResponse> updateProductById(@PathVariable("product_id") final Integer productId,
+	                                                     @RequestBody final ProductDTO productDTO) throws CustomException {
 		productService.updateProductById(productDTO, productId);
 		return new ResponseEntity<>(
 						new ApiResponse(true, "Product was updated successfully."),
