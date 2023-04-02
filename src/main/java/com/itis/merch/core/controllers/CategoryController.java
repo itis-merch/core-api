@@ -27,7 +27,7 @@ import java.util.Objects;
 public class CategoryController {
 
 	@Autowired
-	final CategoryService categoryService;
+	private final CategoryService categoryService;
 
 	/**
 	 * Retrieves all categories from the database.
@@ -35,8 +35,8 @@ public class CategoryController {
 	 * @return ResponseEntity containing the list of categories and a status code of 200 OK.
 	 */
 	@GetMapping
-	public ResponseEntity<List<CategoryDTO>> getCategories() {
-		return new ResponseEntity<>(categoryService.getAll(), HttpStatus.OK);
+	public ResponseEntity<List<CategoryDTO>> getAllCategories() {
+		return new ResponseEntity<>(categoryService.getAllCategories(), HttpStatus.OK);
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class CategoryController {
 	 */
 	@GetMapping("/{category_id}")
 	public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable("category_id") Integer categoryId) throws CustomException {
-		return new ResponseEntity<>(categoryService.getById(categoryId), HttpStatus.FOUND);
+		return new ResponseEntity<>(categoryService.getCategoryById(categoryId), HttpStatus.FOUND);
 	}
 
 	/**
@@ -59,12 +59,12 @@ public class CategoryController {
 	 */
 	@PostMapping
 	public ResponseEntity<ApiResponse> createCategory(@RequestBody CategoryDTO categoryDTO) throws CustomException {
-		if (Objects.nonNull(categoryService.readCategory(categoryDTO.getName()))) {
-			throw new CustomException("Category with this name already exists!", HttpStatus.CONFLICT);
+		if (Objects.nonNull(categoryService.getCategoryByName(categoryDTO.getName()))) {
+			throw new CustomException("Category with this name already exists.", HttpStatus.CONFLICT);
 		}
 
-		categoryService.create(categoryDTO);
-		return new ResponseEntity<>(new ApiResponse(true, "Category created successfully!"), HttpStatus.CREATED);
+		categoryService.createCategory(categoryDTO);
+		return new ResponseEntity<>(new ApiResponse(true, "Category created successfully."), HttpStatus.CREATED);
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class CategoryController {
 	@PostMapping("/{category_id}")
 	public ResponseEntity<ApiResponse> updateCategoryById(@PathVariable("category_id") Integer categoryID,
 	                                                      @RequestBody CategoryDTO categoryDTO) throws CustomException {
-		categoryService.updateById(categoryDTO, categoryID);
+		categoryService.updateCategoryById(categoryDTO, categoryID);
 		return new ResponseEntity<>(
 						new ApiResponse(true, "Category was updated successfully."),
 						HttpStatus.OK

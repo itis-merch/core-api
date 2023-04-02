@@ -32,7 +32,7 @@ public class ProductService {
 	 * @param productDTO The ProductDTO object representing the new product to be added.
 	 * @throws RuntimeException If the category associated with the product does not exist.
 	 */
-	public void addNewProduct(ProductDTO productDTO) throws CustomException {
+	public void createProduct(ProductDTO productDTO) throws CustomException {
 		Category category = categoryRepository.findById(productDTO.getCategoryID()).orElseThrow(() ->
 						new CustomException("Category with given id does not exist.", HttpStatus.NOT_FOUND)
 		);
@@ -52,7 +52,7 @@ public class ProductService {
 	 *
 	 * @return A list of all ProductDTO objects representing the products in the system.
 	 */
-	public List<ProductDTO> getAll() {
+	public List<ProductDTO> getAllProducts() {
 		return productRepository.findAll()
 						.stream()
 						.map(ProductDTO::new)
@@ -66,7 +66,7 @@ public class ProductService {
 	 * @return A ProductDTO object representing the retrieved product.
 	 * @throws RuntimeException If the product with the given ID does not exist.
 	 */
-	public ProductDTO getById(Integer id) throws CustomException {
+	public ProductDTO getProductById(Integer id) throws CustomException {
 		Product product = productRepository.findById(id).orElseThrow(() ->
 						new CustomException("Product with required id does not exist.", HttpStatus.NOT_FOUND));
 
@@ -80,7 +80,7 @@ public class ProductService {
 	 * @param id         The ID of the product to be updated.
 	 * @throws RuntimeException If the product with the given ID does not exist or the category associated with the product does not exist.
 	 */
-	public void updateById(ProductDTO productDTO, Integer id) throws CustomException {
+	public void updateProductById(ProductDTO productDTO, Integer id) throws CustomException {
 		Product updatedProduct = productRepository.findById(id).orElseThrow(() -> new CustomException("Product with required id does not exist.", HttpStatus.NOT_FOUND));
 
 		updatedProduct.setCategory(categoryRepository.findById(productDTO.getCategoryID()).orElseThrow(() -> new CustomException("Category with given id does not exist.", HttpStatus.NOT_FOUND)));

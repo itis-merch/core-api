@@ -36,7 +36,7 @@ public class ProductController {
 	 */
 	@PostMapping
 	public ResponseEntity<ApiResponse> addNewProduct(@RequestBody final ProductDTO productDTO) throws CustomException {
-		productService.addNewProduct(productDTO);
+		productService.createProduct(productDTO);
 		return new ResponseEntity<>(
 						new ApiResponse(true, "Product was added successfully."),
 						HttpStatus.CREATED
@@ -52,7 +52,7 @@ public class ProductController {
 	 */
 	@GetMapping
 	public ResponseEntity<List<ProductDTO>> getProducts() {
-		return ResponseEntity.ok(productService.getAll());
+		return ResponseEntity.ok(productService.getAllProducts());
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class ProductController {
 	 */
 	@GetMapping("/{product_id}")
 	public ResponseEntity<ProductDTO> getProductById(@PathVariable("product_id") Integer productId) throws CustomException {
-		return ResponseEntity.ok(productService.getById(productId));
+		return ResponseEntity.ok(productService.getProductById(productId));
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class ProductController {
 	@PostMapping("/{product_id}")
 	public ResponseEntity<ApiResponse> updateProductById(@PathVariable("product_id") Integer productId,
 	                                                     @RequestBody ProductDTO productDTO) throws CustomException {
-		productService.updateById(productDTO, productId);
+		productService.updateProductById(productDTO, productId);
 		return new ResponseEntity<>(
 						new ApiResponse(true, "Product was updated successfully."),
 						HttpStatus.OK

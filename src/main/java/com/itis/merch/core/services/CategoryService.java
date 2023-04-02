@@ -39,7 +39,7 @@ public class CategoryService {
 	 *
 	 * @return a list of CategoryDTO objects
 	 */
-	public List<CategoryDTO> getAll() {
+	public List<CategoryDTO> getAllCategories() {
 		return categoryRepository.findAll()
 						.stream()
 						.map(CategoryDTO::new)
@@ -53,7 +53,7 @@ public class CategoryService {
 	 * @return a {@code CategoryDTO} object representing the retrieved category, or null if
 	 * the category with the specified name does not exist in the database.
 	 */
-	public CategoryDTO readCategory(final String name) {
+	public CategoryDTO getCategoryByName(final String name) {
 		final Category category = categoryRepository.findByName(name);
 		return Objects.nonNull(category) ? new CategoryDTO(category) : null;
 	}
@@ -65,7 +65,7 @@ public class CategoryService {
 	 * @return a CategoryDTO object
 	 * @throws Exception if the category does not exist
 	 */
-	public CategoryDTO getById(Integer id) throws CustomException {
+	public CategoryDTO getCategoryById(final Integer id) throws CustomException {
 		Category category = categoryRepository.findById(id).orElseThrow(() ->
 						new CustomException("Category with required id does not exist.", HttpStatus.NOT_FOUND));
 
@@ -78,7 +78,7 @@ public class CategoryService {
 	 * @param categoryDTO the CategoryDTO object to create
 	 * @throws Exception if a category with the same name already exists
 	 */
-	public void create(final CategoryDTO categoryDTO) {
+	public void createCategory(final CategoryDTO categoryDTO) {
 		final Category category = new Category();
 
 		category.setId(categoryDTO.getId());
@@ -91,12 +91,12 @@ public class CategoryService {
 	/**
 	 * Updates a category with the specified ID in the database.
 	 *
-	 * @param category the updated category object
-	 * @param id       the ID of the category to update
+	 * @param categoryDTO the updated category object
+	 * @param id          the ID of the category to update
 	 * @return the updated category object
 	 * @throws Exception if the category does not exist
 	 */
-	public void updateById(CategoryDTO categoryDTO, Integer id) throws CustomException {
+	public void updateCategoryById(CategoryDTO categoryDTO, Integer id) throws CustomException {
 		Category updatedCategory = categoryRepository.findById(id).orElseThrow(() -> new CustomException("Category with required id does not exist.", HttpStatus.NOT_FOUND));
 
 		updatedCategory.setName(categoryDTO.getName());
