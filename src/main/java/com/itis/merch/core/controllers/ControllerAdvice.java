@@ -19,15 +19,16 @@ public class ControllerAdvice {
 	/**
 	 * Handles runtime exceptions that occur in any controller in the system and returns
 	 * an ApiResponse object containing an error message.
+	 * <p>
+	 * The method is annotated with @ExceptionHandler to indicate that it handles exceptions
+	 * to the specified type.
+	 * <p>
+	 * The method is also annotated with @ResponseBody to indicate that it returns a response
+	 * body that will be written directly to the response.
 	 *
 	 * @param customException The CustomException that occurred and needs to be caught.
 	 * @return An ApiResponse object containing a false status and the error message of
 	 * the exception.
-	 *
-	 * The method is annotated with @ExceptionHandler to indicate that it handles exceptions
-	 * to the specified type.
-	 * The method is also annotated with @ResponseBody to indicate that it returns a response
-	 * body that will be written directly to the response.
 	 */
 	@ResponseBody
 	@ExceptionHandler(CustomException.class)
