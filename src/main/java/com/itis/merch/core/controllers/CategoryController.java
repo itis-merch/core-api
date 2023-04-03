@@ -1,16 +1,8 @@
-/**
- * The CategoryController class is a REST API controller that handles all HTTP requests related to categories.
- * It provides endpoints for retrieving, creating, and updating categories.
- *
- * @author [Marat]
- * @version 1.0
- * @since 2023.03.31
- */
 package com.itis.merch.core.controllers;
 
 import com.itis.merch.core.common.ApiResponse;
 import com.itis.merch.core.dto.category.CategoryDTO;
-import com.itis.merch.core.models.Category;
+import com.itis.merch.core.exceptions.CustomException;
 import com.itis.merch.core.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +14,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * This class represents a RESTful controller for handling HTTP requests related to categories.
- * <p>
- * It contains methods for retrieving, creating, updating categories and is mapped to the
- * "/categories" endpoint.
+ * The CategoryController class is a REST API controller that handles all HTTP requests related to categories.
+ * It provides endpoints for retrieving, creating, and updating categories.
  */
 @RequiredArgsConstructor
 @RestController
@@ -33,7 +23,7 @@ import java.util.Objects;
 public class CategoryController {
 
 	@Autowired
-	final CategoryService categoryService;
+	private final CategoryService categoryService;
 
 	/**
 	 * Retrieves all categories from the database.
@@ -41,25 +31,19 @@ public class CategoryController {
 	 * @return ResponseEntity containing the list of categories and a status code of 200 OK.
 	 */
 	@GetMapping
-	public ResponseEntity<List<CategoryDTO>> getCategories() {
-		return new ResponseEntity<>(categoryService.getAll(), HttpStatus.OK);
+	public ResponseEntity<List<CategoryDTO>> getAllCategories() {
+		return new ResponseEntity<>(categoryService.getAllCategories(), HttpStatus.OK);
 	}
 
 	/**
 	 * Retrieves a category with the specified ID from the database.
 	 *
-	 * @param id the ID of the category to retrieve
-	 * @return ResponseEntity containing the category object and a status code of 200 OK
-	 * if successful, or a status code of 400 Bad Request and an error message if an
-	 * exception is caught.
+	 * @param categoryId the ID of the category to retrieve.
+	 * @return ResponseEntity containing the category DTO object and a status code of 302 FOUND.
 	 */
 	@GetMapping("/{category_id}")
-	public ResponseEntity getCategoryById(@PathVariable("category_id") Integer id) {
-		try {
-			return ResponseEntity.ok(categoryService.getById(id));
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body("Category with this id does not exist!");
-		}
+	public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable("category_id") final Integer categoryId) throws CustomException {
+		return new ResponseEntity<>(categoryService.getCategoryById(categoryId), HttpStatus.FOUND);
 	}
 
 	/**
@@ -70,37 +54,29 @@ public class CategoryController {
 	 * created successfully or not, and the appropriate HTTP status code.
 	 */
 	@PostMapping
-	public ResponseEntity<ApiResponse> createCategory(@RequestBody CategoryDTO categoryDTO) {
-		if (Objects.nonNull(categoryService.readCategory(categoryDTO.getName()))) {
-			return new ResponseEntity<>(new ApiResponse(false, "Category with this name already exists!"), HttpStatus.BAD_REQUEST);
+	public ResponseEntity<ApiResponse> createCategory(@RequestBody final CategoryDTO categoryDTO) throws CustomException {
+		if (Objects.nonNull(categoryService.getCategoryByName(categoryDTO.getName()))) {
+			throw new CustomException("Category with this name already exists.", HttpStatus.CONFLICT);
 		}
 
-		categoryService.create(categoryDTO);
-		return new ResponseEntity<>(new ApiResponse(true, "Category created successfully!"), HttpStatus.CREATED);
+		categoryService.createCategory(categoryDTO);
+		return new ResponseEntity<>(new ApiResponse(true, "Category created successfully."), HttpStatus.CREATED);
 	}
 
 	/**
 	 * Updates a category with the specified ID in the database.
 	 *
-	 * @param category the updated category object
-	 * @param id       the ID of the category to update
-	 * @return ResponseEntity containing a success message and a status code of 202 Accepted
-	 * if successful, or a failure message and a status code of 400 Bad Request if the category
-	 * does not exist.
+	 * @param categoryDTO the updated category DTO object.
+	 * @param categoryID  the ID of the category to update.
+	 * @return ResponseEntity containing a success message and a status code of 200 OK.
 	 */
 	@PostMapping("/{category_id}")
-	public ResponseEntity updateCategoryById(@RequestBody Category category, @PathVariable("category_id") Integer id) {
-		try {
-			categoryService.updateById(category, id);
-			return new ResponseEntity<>(
-							new ApiResponse(true, "Category was updated successfully!"),
-							HttpStatus.ACCEPTED
-			);
-		} catch (Exception e) {
-			return new ResponseEntity<>(
-							new ApiResponse(false, "Category you want to update does not exist!"),
-							HttpStatus.BAD_REQUEST
-			);
-		}
+	public ResponseEntity<ApiResponse> updateCategoryById(@PathVariable("category_id") final Integer categoryID,
+	                                                      @RequestBody final CategoryDTO categoryDTO) throws CustomException {
+		categoryService.updateCategoryById(categoryDTO, categoryID);
+		return new ResponseEntity<>(
+						new ApiResponse(true, "Category was updated successfully."),
+						HttpStatus.OK
+		);
 	}
 }
