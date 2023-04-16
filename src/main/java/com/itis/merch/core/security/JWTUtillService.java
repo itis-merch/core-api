@@ -27,7 +27,11 @@ public class JWTUtillService {
 		return claimsResolver.apply(claims);
 	}
 
-	public Claims extractAllClaim(String token) {
+	private Claims extractAllClaim(String token) {
 		return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+	}
+
+	private boolean isTokenExpired(String token) {
+		return extractExpiration(token).before(new Date());
 	}
 }
