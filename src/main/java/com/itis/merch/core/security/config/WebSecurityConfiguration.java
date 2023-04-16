@@ -16,4 +16,21 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		return super.authenticationManagerBean();
 	}
 
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http
+						.csrf().disable()
+						.authorizeRequests()
+						.antMatchers("/auth/**").permitAll()
+						.anyRequest()
+						.authenticated()
+						.and()
+						.logout()
+						.logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
+						.invalidateHttpSession(true)
+						.clearAuthentication(true)
+						.deleteCookies("JSESSIONID")
+						.logoutSuccessUrl("/auth/login");
+	}
+
 }
