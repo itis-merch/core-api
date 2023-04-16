@@ -21,8 +21,11 @@ public class JWTUtillService {
 	/**
 	 * The secret key used to sign and verify JWTs.
 	 */
-	@Value("${jwt.seсret}")
+	@Value("${jwt.secret}")
 	private String SECRET_KEY;
+
+	@Value("${jwt.expiration.time}")
+	private long EXPIRATION_TIME;
 
 
 	/**
@@ -96,9 +99,11 @@ public class JWTUtillService {
 	 * @param subject The subject of the JWT.
 	 * @return The JWT as a string.
 	 */
+
+
 	public String createToken(Map<String, Object> claims, String subject) {
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
 				.signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
 	}
 
