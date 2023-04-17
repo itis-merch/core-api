@@ -87,9 +87,24 @@ public class JWTUtilService {
 	 * @param userDetails the user details to generate the token for
 	 * @return the generated JWT token
 	 */
+	@Deprecated
 	public String generateToken(UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
 		return createToken(claims, userDetails.getUsername());
+	}
+
+	/**
+	 * Generates a JWT token for the given user details.
+	 *
+	 * @param emailAddress the user e-mail address to generate the token
+	 *                     for.
+	 * @param role the user role to be encoded in the JWT.
+	 * @return the generated JWT token
+	 */
+	public String generateToken(String emailAddress, String role) {
+		Map<String, Object> claims = new HashMap<>();
+		claims.put("role", role);
+		return createToken(claims, emailAddress);
 	}
 
 	/**

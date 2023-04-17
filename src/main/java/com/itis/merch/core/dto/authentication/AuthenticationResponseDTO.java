@@ -13,7 +13,7 @@ public final class AuthenticationResponseDTO {
 	@NotBlank
 	private final String emailAddress;
 
-	@JsonProperty("password")
+	@JsonProperty("jwtToken")
 	@NotNull
 	@NotBlank
 	private final String jwtToken;
