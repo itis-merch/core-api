@@ -51,16 +51,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 						.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 						.and()
 						.authorizeRequests()
-						.antMatchers("/auth/**").permitAll()
+						.antMatchers("/**").permitAll()
 						.anyRequest().authenticated()
 						.and()
-						.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
-						.logout()
-						.logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout", "POST"))
-						.invalidateHttpSession(true)
-						.clearAuthentication(true)
-						.deleteCookies("JSESSIONID")
-						.logoutSuccessUrl("/auth/login");
+						.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 
 }

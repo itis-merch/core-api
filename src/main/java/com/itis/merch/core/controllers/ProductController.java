@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -64,6 +65,7 @@ public class ProductController {
 	 * status 200 OK.
 	 */
 	@GetMapping("/{product_id}")
+	@PreAuthorize("hasAuthority('products::write')")
 	public ResponseEntity<ProductDTO> getProductById(@PathVariable("product_id") final Integer productId) throws CustomException {
 		return ResponseEntity.ok(productService.getProductById(productId));
 	}
@@ -78,6 +80,7 @@ public class ProductController {
 	 * status 200 OK.
 	 */
 	@PostMapping("/{product_id}")
+	@PreAuthorize("hasAuthority('products::write')")
 	public ResponseEntity<ApiResponse> updateProductById(@PathVariable("product_id") final Integer productId,
 	                                                     @RequestBody final ProductDTO productDTO) throws CustomException {
 		productService.updateProductById(productDTO, productId);
