@@ -25,55 +25,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AppUserService implements UserDetailsService {
 	private final AppUserRepository appUserRepository;
-	private final AuthenticationManager authenticationManager;
-	private final JWTUtilService jwtUtilService;
-
-	public void register(final RegisterRequestDTO registerRequestDTO) throws CustomException {
-		Optional<AppUser> appUser = appUserRepository.findByEmailAddress(registerRequestDTO.getEmailAddress());
-
-		if (appUser.isPresent()) {
-			throw new CustomException("This e-mail address is already taken.", HttpStatus.CONFLICT);
-		}
-
-		appUserRepository.save(AppUser.builder()
-						.firstName(registerRequestDTO.getFirstName())
-						.lastName(registerRequestDTO.getLastName())
-						.emailAddress(registerRequestDTO.getEmailAddress())
-						.password(
-										new PasswordEncoder()
-														.bCryptPasswordEncoder()
-														.encode(registerRequestDTO.getPassword()))
-						.role(AppUserRole.CUSTOMER)
-						.build());
-	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return SecurityUser.fromAppUser(getUserByEmailAddress(username));
-	}
-
-	private AppUser getUserByEmailAddress(String emailAddress) {
-		Optional<AppUser> appUser = appUserRepository.findByEmailAddress(emailAddress);
+		Optional<AppUser> appUser = appUserRepository.findByEmailAddress(username);
 
 		if (appUser.isEmpty()) {
 			throw new UsernameNotFoundException("User with provided e-mail address doesn't exist.");
 		}
 
-		return appUser.get();
-	}
-
-	public String authenticate(final LoginRequestDTO loginRequestDTO) throws CustomException {
-		try {
-			authenticationManager.authenticate(
-							new UsernamePasswordAuthenticationToken(
-											loginRequestDTO.getEmailAddress(),
-											loginRequestDTO.getPassword()
-							)
-			);
-			AppUser appUser = getUserByEmailAddress(loginRequestDTO.getEmailAddress());
-			return jwtUtilService.generateToken(loginRequestDTO.getEmailAddress(), appUser.getRole().name());
-		} catch (BadCredentialsException e) {
-			throw new CustomException("You provided bad credentials.", HttpStatus.BAD_REQUEST);
-		}
+		return SecurityUser.fromAppUser(appUser.get());
 	}
 }

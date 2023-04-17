@@ -5,7 +5,7 @@ import com.itis.merch.core.dto.authentication.AuthenticationResponseDTO;
 import com.itis.merch.core.dto.authentication.LoginRequestDTO;
 import com.itis.merch.core.dto.authentication.RegisterRequestDTO;
 import com.itis.merch.core.exceptions.CustomException;
-import com.itis.merch.core.services.AppUserService;
+import com.itis.merch.core.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,17 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AppUserController {
-	private final AppUserService appUserService;
+	private final AuthenticationService authenticationService;
 
 	@PostMapping("/register")
 	public ResponseEntity<ApiResponse> register(@RequestBody final RegisterRequestDTO registerRequestDTO) throws CustomException {
-		appUserService.register(registerRequestDTO);
+		authenticationService.register(registerRequestDTO);
 		return new ResponseEntity<>(new ApiResponse(true, "You have been registered successfully."), HttpStatus.ACCEPTED);
 	}
 
-	@PostMapping
+	@PostMapping("/login")
 	public ResponseEntity<AuthenticationResponseDTO> login(@RequestBody final LoginRequestDTO loginRequestDTO) throws CustomException {
-		String jwtToken = appUserService.authenticate(loginRequestDTO);
+		String jwtToken = authenticationService.authenticate(loginRequestDTO);
 		return new ResponseEntity<>(new AuthenticationResponseDTO(loginRequestDTO.getEmailAddress(), jwtToken), HttpStatus.ACCEPTED);
 	}
 }
