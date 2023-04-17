@@ -2,6 +2,7 @@ package com.itis.merch.core.controllers;
 
 import com.itis.merch.core.common.ApiResponse;
 import com.itis.merch.core.dto.authentication.RegisterRequestDTO;
+import com.itis.merch.core.exceptions.CustomException;
 import com.itis.merch.core.services.AppUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +19,7 @@ public class AppUserController {
 	private final AppUserService appUserService;
 
 	@PostMapping("/register")
-	public ResponseEntity<ApiResponse> register(@RequestBody final RegisterRequestDTO registerRequestDTO) {
+	public ResponseEntity<ApiResponse> register(@RequestBody final RegisterRequestDTO registerRequestDTO) throws CustomException {
 		appUserService.register(registerRequestDTO);
 		return new ResponseEntity<>(new ApiResponse(true, "You have been registered successfully."), HttpStatus.ACCEPTED);
 	}

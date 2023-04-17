@@ -8,6 +8,7 @@ import com.itis.merch.core.repositories.AppUserRepository;
 import com.itis.merch.core.security.PasswordEncoder;
 import com.itis.merch.core.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,7 +21,13 @@ import java.util.Optional;
 public class AppUserService implements UserDetailsService {
 	private final AppUserRepository appUserRepository;
 
-	public void register(final RegisterRequestDTO registerRequestDTO) {
+	public void register(final RegisterRequestDTO registerRequestDTO) throws CustomException {
+		Optional<AppUser> appUser = appUserRepository.findByEmailAddress(registerRequestDTO.getEmailAddress());
+
+		if (appUser.isPresent()) {
+			throw new CustomException("This e-mail address is already taken.", HttpStatus.CONFLICT);
+		}
+
 		appUserRepository.save(AppUser.builder()
 						.firstName(registerRequestDTO.getFirstName())
 						.lastName(registerRequestDTO.getLastName())
