@@ -16,7 +16,7 @@ import java.util.function.Function;
  * This class provides utility methods for working with JWT (JSON Web Tokens).
  */
 @Service
-public class JWTUtillService {
+public class JWTUtilService {
 
 	/**
 	 * The secret key used to sign and verify JWTs.

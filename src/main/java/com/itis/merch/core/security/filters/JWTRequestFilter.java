@@ -1,12 +1,11 @@
 package com.itis.merch.core.security.filters;
 
-import com.itis.merch.core.security.JWTUtillService;
+import com.itis.merch.core.security.JWTUtilService;
+import com.itis.merch.core.services.AppUserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -21,9 +20,9 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JWTRequestFilter extends OncePerRequestFilter {
 
-	private final UserDetailsService userDetailsService;
+	private final AppUserService appUserService;
 
-	private final JWTUtillService jwtUtillService;
+	private final JWTUtilService jwtUtilService;
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -34,12 +33,12 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
 		if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
 			jwt = authorizationHeader.substring(7);
-			username = jwtUtillService.extractUsername(jwt);
+			username = jwtUtilService.extractUsername(jwt);
 		}
 
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-			if (jwtUtillService.validateToken(jwt,userDetails)) {
+			UserDetails userDetails = this.appUserService.loadUserByUsername(username);
+			if (jwtUtilService.validateToken(jwt,userDetails)) {
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 								userDetails,null,userDetails.getAuthorities());
 				usernamePasswordAuthenticationToken
