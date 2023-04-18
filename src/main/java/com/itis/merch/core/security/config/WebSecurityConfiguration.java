@@ -15,7 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -27,6 +26,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	/**
 	 * This method creates and returns an AuthenticationManager bean that will be used by the application.
+	 *
 	 * @return the authentication manager bean
 	 */
 	@Bean
@@ -40,6 +40,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 * The "/auth/**" endpoint is permitted for all requests while all other requests are authenticated.
 	 * The "/auth/logout" endpoint is used to log out the user, and the user's session is invalidated,
 	 * the authentication is cleared, and the JSESSIONID cookie is deleted.
+	 *
 	 * @param http the HttpSecurity object to configure
 	 * @throws Exception if an error occurs while configuring the HttpSecurity object
 	 */

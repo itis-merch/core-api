@@ -98,7 +98,7 @@ public class JWTUtilService {
 	 *
 	 * @param emailAddress the user e-mail address to generate the token
 	 *                     for.
-	 * @param role the user role to be encoded in the JWT.
+	 * @param role         the user role to be encoded in the JWT.
 	 * @return the generated JWT token
 	 */
 	public String generateToken(String emailAddress, String role) {
@@ -110,22 +110,20 @@ public class JWTUtilService {
 	/**
 	 * Creates a JWT based on the provided claims and subject.
 	 *
-	 * @param claims The claims to include in the JWT.
+	 * @param claims  The claims to include in the JWT.
 	 * @param subject The subject of the JWT.
 	 * @return The JWT as a string.
 	 */
-
-
 	public String createToken(Map<String, Object> claims, String subject) {
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-				.signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
+						.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+						.signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
 	}
 
 	/**
 	 * Validates the provided JWT against the provided user details.
 	 *
-	 * @param token The JWT to validate.
+	 * @param token       The JWT to validate.
 	 * @param userDetails The user details to validate the JWT against.
 	 * @return True if the JWT is valid, false otherwise.
 	 */

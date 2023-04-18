@@ -22,8 +22,6 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
-
-	@Autowired
 	private final CategoryService categoryService;
 
 	/**

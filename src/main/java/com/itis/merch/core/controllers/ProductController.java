@@ -24,7 +24,6 @@ import java.util.List;
 @RequestMapping("/products")
 @RequiredArgsConstructor
 public class ProductController {
-	@Autowired
 	private final ProductService productService;
 
 	/**
