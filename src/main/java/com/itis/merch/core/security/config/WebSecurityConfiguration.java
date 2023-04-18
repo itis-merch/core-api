@@ -4,6 +4,7 @@
  */
 package com.itis.merch.core.security.config;
 
+import com.itis.merch.core.security.filters.FilterExceptionHandler;
 import com.itis.merch.core.security.filters.JWTRequestFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -23,6 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	private final JWTRequestFilter jwtRequestFilter;
+	private final FilterExceptionHandler filterExceptionHandler;
 
 	/**
 	 * This method creates and returns an AuthenticationManager bean that will be used by the application.
@@ -55,7 +58,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 						.antMatchers("/**").permitAll()
 						.anyRequest().authenticated()
 						.and()
-						.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+						.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+						.addFilterBefore(filterExceptionHandler, LogoutFilter.class);
 	}
 
 }

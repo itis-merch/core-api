@@ -15,13 +15,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
 public class JWTRequestFilter extends OncePerRequestFilter {
 
 	private final AppUserService appUserService;
-
 	private final JWTUtilService jwtUtilService;
 
 	@Override
@@ -31,15 +31,16 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 		final String username;
 		final String jwt;
 
-		if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+		if (Objects.isNull(authorizationHeader) || !authorizationHeader.startsWith("Bearer ")) {
 			filterChain.doFilter(request, response);
 			return;
 		}
+
 		jwt = authorizationHeader.substring(7);
 		username = jwtUtilService.extractUsername(jwt);
 
-		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			UserDetails userDetails = this.appUserService.loadUserByUsername(username);  // FIXME
+		if (Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
+			UserDetails userDetails = this.appUserService.loadUserByUsername(username);
 
 			if (jwtUtilService.validateToken(jwt, userDetails)) {
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
