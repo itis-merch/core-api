@@ -34,7 +34,7 @@ public class JWTUtilService {
 	 * @param token the JWT token to extract the username from
 	 * @return the username extracted from the token
 	 */
-	public String extractUsername(String token) {
+	public String extractUsername(final String token) {
 		return extractClaim(token, Claims::getSubject);
 	}
 
@@ -44,7 +44,7 @@ public class JWTUtilService {
 	 * @param token the JWT token to extract the expiration date from
 	 * @return the expiration date extracted from the token
 	 */
-	public Date extractExpiration(String token) {
+	public Date extractExpiration(final String token) {
 		return extractClaim(token, Claims::getExpiration);
 	}
 
@@ -56,7 +56,7 @@ public class JWTUtilService {
 	 * @param <T>            the type of the claim
 	 * @return the claim extracted from the token
 	 */
-	public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+	public <T> T extractClaim(final String token, final Function<Claims, T> claimsResolver) {
 		final Claims claims = extractAllClaim(token);
 		return claimsResolver.apply(claims);
 	}
@@ -67,7 +67,7 @@ public class JWTUtilService {
 	 * @param token the JWT token to extract the claims from
 	 * @return all claims extracted from the token
 	 */
-	private Claims extractAllClaim(String token) {
+	private Claims extractAllClaim(final String token) {
 		return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
 	}
 
@@ -77,7 +77,7 @@ public class JWTUtilService {
 	 * @param token the JWT token to check for expiration
 	 * @return true if the token is expired, false otherwise
 	 */
-	private boolean isTokenExpired(String token) {
+	private boolean isTokenExpired(final String token) {
 		return extractExpiration(token).before(new Date());
 	}
 
@@ -88,7 +88,7 @@ public class JWTUtilService {
 	 * @return the generated JWT token
 	 */
 	@Deprecated
-	public String generateToken(UserDetails userDetails) {
+	public String generateToken(final UserDetails userDetails) {
 		Map<String, Object> claims = new HashMap<>();
 		return createToken(claims, userDetails.getUsername());
 	}
@@ -101,7 +101,7 @@ public class JWTUtilService {
 	 * @param role         the user role to be encoded in the JWT.
 	 * @return the generated JWT token
 	 */
-	public String generateToken(String emailAddress, String role) {
+	public String generateToken(final String emailAddress, final String role) {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("role", role);
 		return createToken(claims, emailAddress);
@@ -114,7 +114,7 @@ public class JWTUtilService {
 	 * @param subject The subject of the JWT.
 	 * @return The JWT as a string.
 	 */
-	public String createToken(Map<String, Object> claims, String subject) {
+	public String createToken(final Map<String, Object> claims, final String subject) {
 		return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
 						.setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
 						.signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
@@ -127,7 +127,7 @@ public class JWTUtilService {
 	 * @param userDetails The user details to validate the JWT against.
 	 * @return True if the JWT is valid, false otherwise.
 	 */
-	public Boolean validateToken(String token, UserDetails userDetails) {
+	public Boolean validateToken(final String token, final UserDetails userDetails) {
 		final String username = extractUsername(token);
 		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
 	}

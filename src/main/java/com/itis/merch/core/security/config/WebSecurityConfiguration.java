@@ -48,7 +48,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 * @throws Exception if an error occurs while configuring the HttpSecurity object
 	 */
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	protected void configure(final HttpSecurity http) throws Exception {
 		http
 						.csrf().disable()
 						.sessionManagement()

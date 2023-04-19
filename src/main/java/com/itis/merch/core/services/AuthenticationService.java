@@ -40,7 +40,7 @@ public class AuthenticationService {
 										new PasswordEncoder()
 														.bCryptPasswordEncoder()
 														.encode(registerRequestDTO.getPassword()))
-						.role(AppUserRole.ADMIN)
+						.role(AppUserRole.CUSTOMER)
 						.build());
 	}
 
@@ -59,7 +59,7 @@ public class AuthenticationService {
 		}
 	}
 
-	private AppUser getUserByEmailAddress(String emailAddress) {
+	private AppUser getUserByEmailAddress(final String emailAddress) {
 		Optional<AppUser> appUser = appUserRepository.findByEmailAddress(emailAddress);
 
 		if (appUser.isEmpty()) {

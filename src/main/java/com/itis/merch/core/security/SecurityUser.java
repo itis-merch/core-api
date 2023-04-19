@@ -40,9 +40,11 @@ public class SecurityUser implements UserDetails {
 	 * @param appUser The AppUser instance to create the SecurityUser from.
 	 * @return A new instance of the SecurityUser class initialized with the user's email address, password, and authorities.
 	 */
-	public static SecurityUser fromAppUser(AppUser appUser) {
-
-		return new SecurityUser(appUser.getEmailAddress(), appUser.getPassword(), new ArrayList<>(appUser.getRole().getAuthorities()));
+	public static SecurityUser fromAppUser(final AppUser appUser) {
+		return new SecurityUser(
+						appUser.getEmailAddress(),
+						appUser.getPassword(),
+						new ArrayList<>(appUser.getRole().getAuthorities()));
 	}
 
 	/**

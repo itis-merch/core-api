@@ -20,7 +20,10 @@ public class FilterExceptionHandler extends OncePerRequestFilter {
 	private final ObjectMapper objectMapper;
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+	protected void doFilterInternal(
+					final HttpServletRequest request,
+					final HttpServletResponse response,
+					final FilterChain filterChain) throws ServletException, IOException {
 		try {
 			filterChain.doFilter(request, response);
 		} catch (RuntimeException e) {
