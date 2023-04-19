@@ -18,7 +18,7 @@ public class AppUserService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-		Optional<AppUser> appUser = appUserRepository.findByEmailAddress(username);
+		final Optional<AppUser> appUser = appUserRepository.findByEmailAddress(username);
 
 		if (appUser.isEmpty()) {
 			throw new UsernameNotFoundException("User with provided e-mail address doesn't exist.");

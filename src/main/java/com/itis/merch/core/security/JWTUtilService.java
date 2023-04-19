@@ -89,7 +89,7 @@ public class JWTUtilService {
 	 */
 	@Deprecated
 	public String generateToken(final UserDetails userDetails) {
-		Map<String, Object> claims = new HashMap<>();
+		final Map<String, Object> claims = new HashMap<>();
 		return createToken(claims, userDetails.getUsername());
 	}
 
@@ -102,7 +102,7 @@ public class JWTUtilService {
 	 * @return the generated JWT token
 	 */
 	public String generateToken(final String emailAddress, final String role) {
-		Map<String, Object> claims = new HashMap<>();
+		final Map<String, Object> claims = new HashMap<>();
 		claims.put("role", role);
 		return createToken(claims, emailAddress);
 	}

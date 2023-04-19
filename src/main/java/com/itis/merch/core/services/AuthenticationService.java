@@ -26,7 +26,7 @@ public class AuthenticationService {
 	private final JWTUtilService jwtUtilService;
 
 	public void register(final RegisterRequestDTO registerRequestDTO) throws CustomException {
-		Optional<AppUser> appUser = appUserRepository.findByEmailAddress(registerRequestDTO.getEmailAddress());
+		final Optional<AppUser> appUser = appUserRepository.findByEmailAddress(registerRequestDTO.getEmailAddress());
 
 		if (appUser.isPresent()) {
 			throw new CustomException("This e-mail address is already taken.", HttpStatus.CONFLICT);
@@ -52,7 +52,7 @@ public class AuthenticationService {
 											loginRequestDTO.getPassword()
 							)
 			);
-			AppUser appUser = getUserByEmailAddress(loginRequestDTO.getEmailAddress());
+			final AppUser appUser = getUserByEmailAddress(loginRequestDTO.getEmailAddress());
 			return jwtUtilService.generateToken(loginRequestDTO.getEmailAddress(), appUser.getRole().name());
 		} catch (BadCredentialsException e) {
 			throw new CustomException("You provided bad credentials.", HttpStatus.BAD_REQUEST);
@@ -60,8 +60,9 @@ public class AuthenticationService {
 	}
 
 	private AppUser getUserByEmailAddress(final String emailAddress) {
-		Optional<AppUser> appUser = appUserRepository.findByEmailAddress(emailAddress);
+		final Optional<AppUser> appUser = appUserRepository.findByEmailAddress(emailAddress);
 
+		// TODO: reduce code duplicate (see AppUserService.java)
 		if (appUser.isEmpty()) {
 			throw new UsernameNotFoundException("User with provided e-mail address doesn't exist.");
 		}

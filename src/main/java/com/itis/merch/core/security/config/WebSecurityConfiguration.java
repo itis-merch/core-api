@@ -54,6 +54,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 						.sessionManagement()
 						.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 						.and()
+//						.requiresChannel()  // for production
+//						.anyRequest()
+//						.requiresSecure()
+//						.and()
 						.authorizeRequests()
 						.antMatchers("/**").permitAll()
 						.anyRequest().authenticated()
