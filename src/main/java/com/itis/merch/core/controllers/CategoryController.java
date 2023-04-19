@@ -5,7 +5,6 @@ import com.itis.merch.core.dto.category.CategoryDTO;
 import com.itis.merch.core.exceptions.CustomException;
 import com.itis.merch.core.services.CategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

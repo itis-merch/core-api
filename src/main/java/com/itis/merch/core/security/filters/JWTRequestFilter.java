@@ -17,13 +17,39 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * The {@code JWTRequestFilter} class is responsible for filtering incoming HTTP
+ * requests and extracting JWT tokens from their authorization headers. It uses
+ * the {@code JWTUtilService} to validate and extract the username from the JWT
+ * token, and then uses the {@code AppUserService} to retrieve the corresponding
+ * {@code UserDetails} object. If the token is valid, it sets the authentication
+ * token for the current security context.
+ */
 @Component
 @RequiredArgsConstructor
 public class JWTRequestFilter extends OncePerRequestFilter {
 
+	/**
+	 * The {@code AppUserService} object used to retrieve {@code UserDetails} objects.
+	 */
 	private final AppUserService appUserService;
+
+	/**
+	 * The {@code JWTUtilService} object used to validate and extract JWT tokens.
+	 */
 	private final JWTUtilService jwtUtilService;
 
+	/**
+	 * Filters the incoming HTTP request and extracts the JWT token from the authorization
+	 * header. If the token is valid and not expired, it sets the authentication token for
+	 * the current security context.
+	 *
+	 * @param request     the HTTP request.
+	 * @param response    the HTTP response.
+	 * @param filterChain the filter chain.
+	 * @throws ServletException if the request cannot be handled.
+	 * @throws IOException      if an I/O error occurs.
+	 */
 	@Override
 	protected void doFilterInternal(
 					final HttpServletRequest request,
