@@ -1,12 +1,13 @@
 package com.itis.merch.core.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * The AppUser class represents a user entity in a database. This
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
  * to map its fields to corresponding columns in the database table
  * {@code user}.
  */
+@Builder
 @Data
 @Entity
 @Table(name = "user")

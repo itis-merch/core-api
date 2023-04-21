@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * This is a UserDetails implementation class for representing a user in the security context.
@@ -33,6 +32,20 @@ public class SecurityUser implements UserDetails {
 	 * The user's authorities.
 	 */
 	private final List<SimpleGrantedAuthority> authorities;
+
+	/**
+	 * This is a static factory method for creating instances of the SecurityUser class from an instance of the AppUser class.
+	 * It takes an instance of the AppUser class and returns a new SecurityUser instance initialized with the user's email address, password, and authorities.
+	 *
+	 * @param appUser The AppUser instance to create the SecurityUser from.
+	 * @return A new instance of the SecurityUser class initialized with the user's email address, password, and authorities.
+	 */
+	public static SecurityUser fromAppUser(final AppUser appUser) {
+		return new SecurityUser(
+						appUser.getEmailAddress(),
+						appUser.getPassword(),
+						new ArrayList<>(appUser.getRole().getAuthorities()));
+	}
 
 	/**
 	 * Returns the user's authorities.
@@ -102,17 +115,5 @@ public class SecurityUser implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
-	}
-
-	/**
-	 * This is a static factory method for creating instances of the SecurityUser class from an instance of the AppUser class.
-	 * It takes an instance of the AppUser class and returns a new SecurityUser instance initialized with the user's email address, password, and authorities.
-	 *
-	 * @param appUser The AppUser instance to create the SecurityUser from.
-	 * @return A new instance of the SecurityUser class initialized with the user's email address, password, and authorities.
-	 */
-	public static SecurityUser fromAppUser(AppUser appUser) {
-
-		return new SecurityUser(appUser.getEmailAddress(), appUser.getPassword(), new ArrayList<>(appUser.getRole().getAuthorities()));
 	}
 }
