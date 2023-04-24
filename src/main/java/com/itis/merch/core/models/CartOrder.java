@@ -22,6 +22,7 @@ public class CartOrder {
 	@NotBlank
 	@NotNull
 	private Integer userId;
+
 	@OneToMany(mappedBy = "cart_order", cascade = CascadeType.ALL, orphanRemoval = true)
 	@NotNull
 	private List<ShoppingCartItem> shoppingCartItems;
@@ -47,9 +48,13 @@ public class CartOrder {
 		CLOSED
 	}
 
-	public CartOrder(@NotNull @NotBlank final Integer userId, @NotNull @NotBlank final String phoneNumber) {
+	public CartOrder(@NotNull @NotBlank final Integer userId,@NotNull List<ShoppingCartItem> shoppingCartItems,
+					 @NotNull @NotBlank Integer totalPrice, @NotNull @NotBlank String phoneNumber,
+					 @NotNull @NotBlank CartOrderStatus status) {
 		this.userId = userId;
+		this.shoppingCartItems = shoppingCartItems;
+		this.totalPrice = totalPrice;
 		this.phoneNumber = phoneNumber;
-		this.status = CartOrderStatus.CART;
+		this.status = status;
 	}
 }
