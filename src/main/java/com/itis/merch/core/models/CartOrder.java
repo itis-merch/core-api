@@ -3,6 +3,7 @@ package com.itis.merch.core.models;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import com.itis.merch.core.enums.CartOrderStatus;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -66,15 +67,6 @@ public class CartOrder {
 	@NotNull
 	private CartOrderStatus status;
 
-	/**
-	 * The possible values of the CartOrderStatus enum.
-	 */
-	private enum CartOrderStatus {
-		CART,
-		PENDING,
-		PAYED,
-		CLOSED
-	}
 
 	/**
 	 * Creates a new cart order with the given user ID, list of shopping cart items, total price, phone number, and status.
@@ -86,7 +78,7 @@ public class CartOrder {
 	 * @param status           the status of the cart order (must not be null)
 	 */
 	public CartOrder(@NotNull @NotBlank final Integer userId,@NotNull List<ShoppingCartItem> shoppingCartItems,
-					 @NotNull @NotBlank Integer totalPrice, @NotNull @NotBlank String phoneNumber,
+					 @NotNull @NotBlank double totalPrice, @NotNull @NotBlank String phoneNumber,
 					 @NotNull @NotBlank CartOrderStatus status) {
 		this.userId = userId;
 		this.shoppingCartItems = shoppingCartItems;
