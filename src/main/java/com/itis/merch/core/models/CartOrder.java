@@ -24,7 +24,7 @@ public class CartOrder {
 	private Integer userId;
 	@OneToMany(mappedBy = "cart_order", cascade = CascadeType.ALL, orphanRemoval = true)
 	@NotNull
-	private List<Product> products;
+	private List<ShoppingCartItem> shoppingCartItems;
 
 	@Column(name = "total_price")
 	@NotBlank
@@ -36,19 +36,20 @@ public class CartOrder {
 	@NotNull
 	private String phoneNumber;
 
-	@Column(name = "cart_order_status")
+	@Column(name = "status")
 	@NotNull
-	private Cart_Order_Status cartOrderStatus;
+	private CartOrderStatus status;
 
-	private enum Cart_Order_Status {
+	private enum CartOrderStatus {
 		CART,
 		PENDING,
 		PAYED,
 		CLOSED
 	}
 
-	public CartOrder(@NotNull @NotBlank final Integer userId) {
+	public CartOrder(@NotNull @NotBlank final Integer userId, @NotNull @NotBlank final String phoneNumber) {
 		this.userId = userId;
-		this.cartOrderStatus = Cart_Order_Status.CART;
+		this.phoneNumber = phoneNumber;
+		this.status = CartOrderStatus.CART;
 	}
 }
