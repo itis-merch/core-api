@@ -14,7 +14,6 @@ import java.util.List;
  * The status can be one of four possible values: CART, PENDING, PAYED, or CLOSED.
  * CART means the order is still in the user's cart, PENDING means the order has been submitted but not yet paid for,
  * PAYED means the order has been paid for, and CLOSED means the order has been delivered or cancelled.
- * PAYED means the order has been paid for, and CLOSED means the order has been delivered or cancelled.
  */
 @NoArgsConstructor
 @Entity
@@ -64,6 +63,7 @@ public class CartOrder {
 	 * The status of the cart order, which can be one of four possible values: CART, PENDING, PAYED, or CLOSED.
 	 */
 	@Column(name = "status")
+	@Enumerated(value = EnumType.STRING)
 	@NotNull
 	private CartOrderStatus status;
 
