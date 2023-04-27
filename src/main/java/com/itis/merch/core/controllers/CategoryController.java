@@ -5,9 +5,9 @@ import com.itis.merch.core.dto.category.CategoryDTO;
 import com.itis.merch.core.exceptions.CustomException;
 import com.itis.merch.core.services.CategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +21,6 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {
-
-	@Autowired
 	private final CategoryService categoryService;
 
 	/**
@@ -54,6 +52,7 @@ public class CategoryController {
 	 * created successfully or not, and the appropriate HTTP status code.
 	 */
 	@PostMapping
+	@PreAuthorize("hasAuthority('categories::write')")
 	public ResponseEntity<ApiResponse> createCategory(@RequestBody final CategoryDTO categoryDTO) throws CustomException {
 		if (Objects.nonNull(categoryService.getCategoryByName(categoryDTO.getName()))) {
 			throw new CustomException("Category with this name already exists.", HttpStatus.CONFLICT);
@@ -71,6 +70,7 @@ public class CategoryController {
 	 * @return ResponseEntity containing a success message and a status code of 200 OK.
 	 */
 	@PostMapping("/{category_id}")
+	@PreAuthorize("hasAuthority('categories::write')")
 	public ResponseEntity<ApiResponse> updateCategoryById(@PathVariable("category_id") final Integer categoryID,
 	                                                      @RequestBody final CategoryDTO categoryDTO) throws CustomException {
 		categoryService.updateCategoryById(categoryDTO, categoryID);
