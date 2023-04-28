@@ -34,4 +34,18 @@ public class CartOrderController {
 						HttpStatus.CREATED
 		);
 	}
+
+	@PostMapping("/order")
+	public ResponseEntity<ApiResponse> order(Authentication authentication) {
+
+		String userEmail = jwtUtilService.extractUsername(authentication.getPrincipal().toString());
+
+		cartOrderService.order(userEmail);
+
+		return new ResponseEntity<>(
+						new ApiResponse(true, "Product was added to cart successfully."),
+						HttpStatus.CREATED
+		);
+
+	}
 }
