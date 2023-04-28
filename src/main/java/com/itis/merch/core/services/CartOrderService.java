@@ -43,7 +43,14 @@ public class CartOrderService {
 						optionRepository.getById(shoppingCartItemDTO.getOptionId()),
 						shoppingCartItemDTO.getQuantity()));
 		cartOrder.getShoppingCartItems().add(shoppingCartItem);
-		cartOrder.setTotalPrice(cartOrder.getTotalPrice()+shoppingCartItem.getQuantity()*product.getPrice());
+		cartOrder.setTotalPrice(cartOrder.getTotalPrice() + shoppingCartItem.getQuantity() * product.getPrice());
+		cartOrderRepository.save(cartOrder);
+	}
+
+	public void order(String userEmail) throws CustomException {
+		AppUser user = appUserRepository.findByEmailAddress(userEmail).get();
+		CartOrder cartOrder = cartOrderRepository.findCartOrderByUserId(user.getId()).orElseThrow(() -> new CustomException("Cart doesn't exist", HttpStatus.BAD_REQUEST));
+		cartOrder.setStatus(CartOrderStatus.PENDING);
 		cartOrderRepository.save(cartOrder);
 	}
 
