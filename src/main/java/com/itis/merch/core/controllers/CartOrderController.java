@@ -21,3 +21,17 @@ public class CartOrderController {
 	private final CartOrderService cartOrderService;
 
 	private final JWTUtilService jwtUtilService;
+
+	@PostMapping("/add")
+	public ResponseEntity<ApiResponse> addCartItem(@RequestBody final ShoppingCartItemDTO shoppingCartItemDTO, Authentication authentication) {
+
+		String userEmail = jwtUtilService.extractUsername(authentication.getPrincipal().toString());
+
+		cartOrderService.addItem(shoppingCartItemDTO, userEmail);
+
+		return new ResponseEntity<>(
+						new ApiResponse(true, "Product was added to cart successfully."),
+						HttpStatus.CREATED
+		);
+	}
+}
