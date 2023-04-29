@@ -43,7 +43,6 @@ public class ShoppingCartItem {
 	 */
 	@Column(name = "quantity")
 	@NotNull
-	@NotBlank
 	private Integer quantity;
 
 	/**

@@ -7,6 +7,7 @@ import com.itis.merch.core.enums.CartOrderStatus;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -47,9 +48,8 @@ public class CartOrder {
 	 * The total price of the cart order.
 	 */
 	@Column(name = "total_price")
-	@NotBlank
 	@NotNull
-	private double totalPrice;
+	private BigDecimal totalPrice;
 
 	/**
 	 * The phone number associated with the cart order.
@@ -78,7 +78,7 @@ public class CartOrder {
 	 * @param status           the status of the cart order (must not be null)
 	 */
 	public CartOrder(@NotNull @NotBlank final Integer userId,@NotNull List<ShoppingCartItem> shoppingCartItems,
-					 @NotNull @NotBlank double totalPrice, @NotNull @NotBlank String phoneNumber,
+					 @NotNull @NotBlank BigDecimal totalPrice, @NotNull @NotBlank String phoneNumber,
 					 @NotNull @NotBlank CartOrderStatus status) {
 		this.userId = userId;
 		this.shoppingCartItems = shoppingCartItems;

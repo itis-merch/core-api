@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 @Service
@@ -53,7 +54,7 @@ public class CartOrderService {
 		// Add the shopping cart item to the cart of the user.
 		cartOrder.getShoppingCartItems().add(shoppingCartItem);
 		// Update the total price of the cart.
-		cartOrder.setTotalPrice(cartOrder.getTotalPrice() + shoppingCartItem.getQuantity() * product.getPrice());
+		cartOrder.setTotalPrice(cartOrder.getTotalPrice().add((BigDecimal.valueOf(shoppingCartItem.getQuantity()).multiply(product.getPrice()))));
 		// Save the cart.
 		cartOrderRepository.save(cartOrder);
 	}
