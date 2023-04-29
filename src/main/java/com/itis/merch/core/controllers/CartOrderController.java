@@ -2,6 +2,7 @@ package com.itis.merch.core.controllers;
 
 import com.itis.merch.core.common.ApiResponse;
 import com.itis.merch.core.dto.cartOrder.ShoppingCartItemDTO;
+import com.itis.merch.core.exceptions.CustomException;
 import com.itis.merch.core.security.JWTUtilService;
 import com.itis.merch.core.services.CartOrderService;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +37,7 @@ public class CartOrderController {
 	}
 
 	@PostMapping("/order")
-	public ResponseEntity<ApiResponse> order(Authentication authentication) {
+	public ResponseEntity<ApiResponse> order(Authentication authentication) throws CustomException {
 
 		String userEmail = jwtUtilService.extractUsername(authentication.getPrincipal().toString());
 
