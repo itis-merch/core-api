@@ -1,3 +1,7 @@
+/**
+
+ This interface represents the repository for the Option entity.
+ */
 package com.itis.merch.core.repositories;
 
 import com.itis.merch.core.models.Option;
