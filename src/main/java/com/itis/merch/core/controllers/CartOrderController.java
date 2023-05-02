@@ -1,6 +1,5 @@
 /**
-
- This class represents the controller for handling requests related to the shopping cart and orders.
+ * This class represents the controller for handling requests related to the shopping cart and orders.
  */
 package com.itis.merch.core.controllers;
 
@@ -28,12 +27,15 @@ public class CartOrderController {
 	 * This method handles the request for adding an item to the shopping cart.
 	 *
 	 * @param shoppingCartItemDTO the DTO object containing the details of the item to be added.
-	 * @param authentication      the object representing the authentication of the user making the request.
+	 * @param securityUser        the object representing the authentication of the user making the request.
 	 * @return ResponseEntity      the response containing the success status and message.
 	 */
 	@PostMapping("/add")
 	@PreAuthorize("isAuthenticated()")
-	public ResponseEntity<ApiResponse> addCartItem(@RequestBody final ShoppingCartItemDTO shoppingCartItemDTO, @AuthenticationPrincipal SecurityUser securityUser) {
+	public ResponseEntity<ApiResponse> addCartItem(
+					@RequestBody final ShoppingCartItemDTO shoppingCartItemDTO,
+					@AuthenticationPrincipal SecurityUser securityUser
+	) {
 
 		String userEmail = securityUser.getEmailAddress();
 
@@ -46,13 +48,15 @@ public class CartOrderController {
 	/**
 	 * This method handles the request for placing an order based on the contents of the shopping cart.
 	 *
-	 * @param authentication the object representing the authentication of the user making the request.
+	 * @param securityUser the object representing the authentication of the user making the request.
 	 * @return ResponseEntity      the response containing the success status and message.
 	 * @throws CustomException if there is an error while processing the order.
 	 */
 	@PostMapping("/order")
 	@PreAuthorize("isAuthenticated()")
-	public ResponseEntity<ApiResponse> order(@AuthenticationPrincipal SecurityUser securityUser) throws CustomException {
+	public ResponseEntity<ApiResponse> order(
+					@AuthenticationPrincipal SecurityUser securityUser
+	) throws CustomException {
 
 		String userEmail = securityUser.getEmailAddress();
 
