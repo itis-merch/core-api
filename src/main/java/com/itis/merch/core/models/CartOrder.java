@@ -55,7 +55,6 @@ public class CartOrder {
 	 * The phone number associated with the cart order.
 	 */
 	@Column(name = "phone_number")
-	@NotBlank
 	@NotNull
 	private String phoneNumber;
 
