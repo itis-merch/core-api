@@ -43,7 +43,7 @@ public class CartOrderService {
 										user.getId(),
 										new ArrayList<>(),
 										new BigDecimal(0),
-										number,
+										"",
 										CartOrderStatus.CART)));
 		// Get the product that is to be added to the cart.
 		Product product = productRepository.getById(shoppingCartItemDTO.getProductId());
