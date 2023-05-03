@@ -1,5 +1,6 @@
 /**
- * This class represents the controller for handling requests related to the shopping cart and orders.
+
+ This class represents the controller for handling requests related to the shopping cart and orders.
  */
 package com.itis.merch.core.controllers;
 
@@ -46,19 +47,19 @@ public class CartOrderController {
 	 * This method handles the request for placing an order based on the contents of the shopping cart.
 	 *
 	 * @param securityUser the object representing the authentication of the user making the request.
+	 * @param phoneNumber the phone number to be used to contact the customer during order processing.
 	 * @return ResponseEntity      the response containing the success status and message.
 	 * @throws CustomException if there is an error while processing the order.
 	 */
 	@PostMapping("/order")
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<ApiResponse> order(
-					@AuthenticationPrincipal SecurityUser securityUser, @RequestPart String number
+					@AuthenticationPrincipal SecurityUser securityUser, @RequestPart String phoneNumber
 	) throws CustomException {
 
 		String userEmail = securityUser.getEmailAddress();
 
-		cartOrderService.order(userEmail,number);
-
+		cartOrderService.order(userEmail, phoneNumber);
 
 		return ResponseEntity.ok()
 						.body(new ApiResponse(true, "Order was placed successfully."));
