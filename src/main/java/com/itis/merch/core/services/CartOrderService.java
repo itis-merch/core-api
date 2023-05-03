@@ -15,6 +15,7 @@ import com.itis.merch.core.repositories.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestPart;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -41,8 +42,8 @@ public class CartOrderService {
 						.orElse(cartOrderRepository.save(new CartOrder(
 										user.getId(),
 										new ArrayList<>(),
-										0,
-										user.getPhoneNumber(),
+										new BigDecimal(0),
+										number,
 										CartOrderStatus.CART)));
 		// Get the product that is to be added to the cart.
 		Product product = productRepository.getById(shoppingCartItemDTO.getProductId());
@@ -65,13 +66,14 @@ public class CartOrderService {
 	 * @param userEmail Email address of the user.
 	 * @throws CustomException if the cart of the user doesn't exist.
 	 */
-	public void order(String userEmail) throws CustomException {
+	public void order(String userEmail, String number) throws CustomException {
 		AppUser user = appUserRepository.findByEmailAddress(userEmail).get();
 		// Find the cart of the user. If it doesn't exist, throw an exception.
 		CartOrder cartOrder = cartOrderRepository.findCartOrderByUserId(user.getId())
 						.orElseThrow(() -> new CustomException("Cart doesn't exist", HttpStatus.BAD_REQUEST));
 		// Set the status of the cart to "Pending".
 		cartOrder.setStatus(CartOrderStatus.PENDING);
+		cartOrder.setPhoneNumber(number);
 		// Save the cart.
 		cartOrderRepository.save(cartOrder);
 	}
