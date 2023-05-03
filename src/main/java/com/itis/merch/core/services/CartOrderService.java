@@ -70,10 +70,10 @@ public class CartOrderService {
 	 * This method places an order for the cart of a user.
 	 *
 	 * @param userEmail Email address of the user.
-	 * @param number    Phone number of the user.
+	 * @param phoneNumber    Phone number of the user.
 	 * @throws CustomException if the cart of the user doesn't exist.
 	 */
-	public void order(String userEmail, String number) throws CustomException {
+	public void order(String userEmail, String phoneNumber) throws CustomException {
 		// Find the user by email.
 		AppUser user = appUserRepository.findByEmailAddress(userEmail)
 						.orElseThrow(() -> new CustomException("User not found", HttpStatus.NOT_FOUND));
@@ -84,7 +84,7 @@ public class CartOrderService {
 
 		// Set the status of the cart to "Pending" and set the phone number.
 		cartOrder.setStatus(CartOrderStatus.PENDING);
-		cartOrder.setPhoneNumber(number);
+		cartOrder.setPhoneNumber(phoneNumber);
 
 		// Save the cart.
 		cartOrderRepository.save(cartOrder);
