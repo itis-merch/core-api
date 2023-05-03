@@ -12,10 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/cart")
@@ -55,12 +52,13 @@ public class CartOrderController {
 	@PostMapping("/order")
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<ApiResponse> order(
-					@AuthenticationPrincipal SecurityUser securityUser
+					@AuthenticationPrincipal SecurityUser securityUser, @RequestPart String number
 	) throws CustomException {
 
 		String userEmail = securityUser.getEmailAddress();
 
-		cartOrderService.order(userEmail);
+		cartOrderService.order(userEmail,number);
+
 
 		return ResponseEntity.ok()
 						.body(new ApiResponse(true, "Order was placed successfully."));
