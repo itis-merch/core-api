@@ -5,6 +5,7 @@ package com.itis.merch.core.controllers;
 
 import com.itis.merch.core.common.ApiResponse;
 import com.itis.merch.core.dto.product.ProductDTO;
+import com.itis.merch.core.dto.product.ProductImageDTO;
 import com.itis.merch.core.exceptions.CustomException;
 import com.itis.merch.core.services.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -85,6 +86,17 @@ public class ProductController {
 		return new ResponseEntity<>(
 						new ApiResponse(true, "Product was updated successfully."),
 						HttpStatus.OK
+		);
+	}
+
+	@PostMapping("/{product_id}/image")
+	@PreAuthorize("hasAuthority('products::write')")
+	public ResponseEntity<ApiResponse> addProductImage(@PathVariable("product_id") final Integer productId,
+	                                                   @RequestBody final ProductImageDTO productImageDTO) throws CustomException {
+		productService.addProductImage(productId, productImageDTO);
+		return new ResponseEntity<>(
+						new ApiResponse(true, "Image was added to the product successfully."),
+						HttpStatus.CREATED
 		);
 	}
 }

@@ -4,10 +4,13 @@
 package com.itis.merch.core.services;
 
 import com.itis.merch.core.dto.product.ProductDTO;
+import com.itis.merch.core.dto.product.ProductImageDTO;
 import com.itis.merch.core.exceptions.CustomException;
 import com.itis.merch.core.models.Category;
 import com.itis.merch.core.models.Product;
+import com.itis.merch.core.models.ProductImage;
 import com.itis.merch.core.repositories.CategoryRepository;
+import com.itis.merch.core.repositories.ProductImageRepository;
 import com.itis.merch.core.repositories.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,9 @@ public class ProductService {
 
 	@Autowired
 	private final CategoryRepository categoryRepository;
+
+	@Autowired
+	private final ProductImageRepository productImageRepository;
 
 	/**
 	 * Adds a new product to the system, given a ProductDTO object.
@@ -91,6 +97,12 @@ public class ProductService {
 		updatedProduct.setPrice(productDTO.getPrice());
 
 		productRepository.save(updatedProduct);
+	}
+
+	public void addProductImage(Integer productId, ProductImageDTO productImageDTO) throws CustomException {
+		Product product = productRepository.findById(productId).orElseThrow(() -> new CustomException("Product with required id does not exist.", HttpStatus.NOT_FOUND));
+		ProductImage productImage = new ProductImage(productImageDTO.getImageURL(), product);
+		productImageRepository.save(productImage);
 	}
 }
 
