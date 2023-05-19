@@ -41,6 +41,11 @@ public class Option {
 	@NotNull
 	private String properties;
 
+	@OneToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "shopping_cart_item_id", nullable = false)
+	@NotNull
+	private ShoppingCartItem shoppingCartItem;
+
 	/**
 	 * Constructs a new option with the given name and properties.
 	 *

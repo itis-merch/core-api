@@ -53,7 +53,7 @@ public final class Product {
 	/**
 	 * A brief description of the product.
 	 */
-	@Column(name = "description")
+	@Column(name = "description", length = Integer.MAX_VALUE)
 	@NotBlank
 	@NotNull
 	private String description;
@@ -96,6 +96,10 @@ public final class Product {
 	@NotNull
 	private Category category;
 
+	@OneToOne(fetch = FetchType.LAZY, optional = true)
+	@JoinColumn(name = "shopping_cart_item_id", nullable = true)
+	private ShoppingCartItem shoppingCartItem;
+
 
 	/*----- Constructors -----*/
 
@@ -116,6 +120,19 @@ public final class Product {
 	 * @param category    The {@code Category} class that this product belongs
 	 *                    to. Must not be blank or null.
 	 */
+	public Product(@NotBlank @NotNull final String name, @NotBlank @NotNull final String description,
+	               @NotBlank @NotNull final Integer quantity, @NotBlank @NotNull final BigDecimal price,
+	               @NotBlank @NotNull final Boolean available, @NotBlank @NotNull final Category category, final ShoppingCartItem shoppingCartItem) {
+		this.name = name;
+		this.description = description;
+		this.quantity = quantity;
+		this.price = price;
+		this.available = available;
+		this.productImages = new ArrayList<>();
+		this.category = category;
+		this.shoppingCartItem = shoppingCartItem;
+	}
+
 	public Product(@NotBlank @NotNull final String name, @NotBlank @NotNull final String description,
 	               @NotBlank @NotNull final Integer quantity, @NotBlank @NotNull final BigDecimal price,
 	               @NotBlank @NotNull final Boolean available, @NotBlank @NotNull final Category category) {

@@ -7,6 +7,7 @@ import com.itis.merch.core.enums.CartOrderStatus;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,9 +40,10 @@ public class CartOrder {
 	/**
 	 * The list of shopping cart items included in the cart order.
 	 */
-	@OneToMany(mappedBy = "cart_order", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "cartOrder", cascade = CascadeType.ALL, orphanRemoval = true)
 	@NotNull
 	private List<ShoppingCartItem> shoppingCartItems;
+
 
 	/**
 	 * The total price of the cart order.
@@ -72,16 +74,15 @@ public class CartOrder {
 	 * Creates a new cart order with the given user ID, list of shopping cart items, total price, phone number, and status.
 	 *
 	 * @param userId           the ID of the user who made the cart order (must not be null or blank)
-	 * @param shoppingCartItems the list of shopping cart items included in the cart order (must not be null)
 	 * @param totalPrice       the total price of the cart order (must not be null or blank)
 	 * @param phoneNumber      the phone number associated with the cart order (must not be null or blank)
 	 * @param status           the status of the cart order (must not be null)
 	 */
-	public CartOrder(@NotNull @NotBlank final Integer userId,@NotNull List<ShoppingCartItem> shoppingCartItems,
+	public CartOrder(@NotNull @NotBlank final Integer userId,
 					 @NotNull @NotBlank double totalPrice, @NotNull @NotBlank String phoneNumber,
 					 @NotNull @NotBlank CartOrderStatus status) {
 		this.userId = userId;
-		this.shoppingCartItems = shoppingCartItems;
+		this.shoppingCartItems = new ArrayList<>();
 		this.totalPrice = totalPrice;
 		this.phoneNumber = phoneNumber;
 		this.status = status;

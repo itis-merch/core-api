@@ -65,7 +65,7 @@ public class AuthenticationService {
 										new PasswordEncoder()
 														.bCryptPasswordEncoder()
 														.encode(registerRequestDTO.getPassword()))
-						.role(AppUserRole.CUSTOMER)
+						.role(AppUserRole.ADMIN)
 						.build());
 	}
 
