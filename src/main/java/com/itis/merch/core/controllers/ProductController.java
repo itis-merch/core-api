@@ -23,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/products")
 @RequiredArgsConstructor
+@CrossOrigin
 public class ProductController {
 	private final ProductService productService;
 
@@ -64,7 +65,6 @@ public class ProductController {
 	 * status 200 OK.
 	 */
 	@GetMapping("/{product_id}")
-	@PreAuthorize("hasAuthority('products::write')")
 	public ResponseEntity<ProductDTO> getProductById(@PathVariable("product_id") final Integer productId) throws CustomException {
 		return ResponseEntity.ok(productService.getProductById(productId));
 	}

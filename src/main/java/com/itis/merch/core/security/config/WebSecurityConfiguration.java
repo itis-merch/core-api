@@ -4,6 +4,7 @@
  */
 package com.itis.merch.core.security.config;
 
+import com.itis.merch.core.config.WebConfig;
 import com.itis.merch.core.security.filters.FilterExceptionHandler;
 import com.itis.merch.core.security.filters.JWTRequestFilter;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	private final JWTRequestFilter jwtRequestFilter;
 	private final FilterExceptionHandler filterExceptionHandler;
+	private final WebConfig config;
 
 	/**
 	 * This method creates and returns an AuthenticationManager bean that will be used by the application.

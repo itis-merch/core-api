@@ -20,6 +20,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/categories")
+@CrossOrigin
 public class CategoryController {
 	private final CategoryService categoryService;
 
